@@ -1,0 +1,11 @@
+louvre_billetterie_order:
+    path:     /
+    defaults: { _controller: LouvreBilletterieBundle:Booking:commande }
+
+louvre_billetterie_details:
+    path:     /{commande_id}/details
+    defaults: { _controller: LouvreBilletterieBundle:Booking:details }
+    
+louvre_billetterie_payment:
+    path:     /payment
+    defaults: { _controller: LouvreBilletterieBundle:Booking:payment }

@@ -1,0 +1,19 @@
+/*body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}*/
+
+#titrePage{
+    color : antiquewhite;
+    font-family: serif;
+    font-size: 2em;
+}
+
+#page-header{
+    background-color: rgb(34,34,34);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,22 @@
+{# src/Louvre/Billetterie/Resources/views/Booking/commande.html.twig #}
+
+{% extends "::base.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Réservation
+{% endblock %}
+
+{% block body %}
+
+  <h1>Billetterie du Louvre !</h1>
+
+<div class="well">
+    <form method="post">
+        {{ form_widget(form) }}
+
+        <input type="submit" />
+    </form>
+</div>
+
+
+{% endblock %}
