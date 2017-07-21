@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CommandeType extends AbstractType
+class DetailsType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,17 +22,14 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commandeDate', DateType::class, array(
-                'label' => 'Choissisez la date de votre visite'))
-            ->add('commandeTypeBillet', ChoiceType::class, array(
-                'label' => 'Choissisez le type de billet',
-                'choices' => array('Journée' => 'Journee', 'Demi-journée' => 'Demi-journee'),
-                'multiple'  => false,
-                'expanded'  => true,)
-            )
-            ->add('commandeNbBillet', IntegerType::class, array(
-                'label' => 'Choissisez le nombre de billet')
-            );
+            ->add('visitorName', TextType::class, array(
+                'label' => 'Nom'))
+            ->add('visitorFisrtname', TextType::class, array(
+                'label' => 'Prénom'))
+            ->add('visitorCountry', ChoiceType::class, array(
+                'label' => 'Pays',
+                'choices' => array('France' => 'France', 'Allemagne' => 'Allemagne'),
+            ));
     }
     
     /**
@@ -41,7 +38,7 @@ class CommandeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Louvre\BilletterieBundle\Entity\Commande'
+            'data_class' => 'Louvre\BilletterieBundle\Entity\Details'
         ));
     }
 
@@ -50,7 +47,7 @@ class CommandeType extends AbstractType
      */
     public function getName()
     {
-        return 'Commande';
+        return 'details';
     }
 
 
