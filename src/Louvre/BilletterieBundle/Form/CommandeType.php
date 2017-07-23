@@ -23,7 +23,13 @@ class CommandeType extends AbstractType
     {
         $builder
             ->add('commandeDate', DateType::class, array(
-                'label' => 'Choissisez la date de votre visite'))
+                'label' => 'Choissisez la date de votre visite',
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => [
+                'class' => 'datepicker'
+                ]
+            ))
             ->add('commandeTypeBillet', ChoiceType::class, array(
                 'label' => 'Choissisez le type de billet',
                 'choices' => array('Journée' => 'Journee', 'Demi-journée' => 'Demi-journee'),

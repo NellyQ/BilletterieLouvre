@@ -2,6 +2,15 @@
 
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{ parent() }}
+
+{% endblock %}
+
 {% block title %}
   {{ parent() }} - Réservation
 {% endblock %}
@@ -10,13 +19,35 @@
 
   <h1>Billetterie du Louvre !</h1>
 
-<div class="well">
- +    <form method="post">
- +        {{ form_widget(form) }}
- +
- +        <input type="submit" />
- +    </form>
- +</div>
+    <form method="post">
+         <div class="col-xs-6 col-xs-offset-3">
+             <div class="controls">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="form-group label-floating">
+                        {{ form_label(form.commandeDate) }}
+                        {{ form_widget(form.commandeDate) }}
+                        {{ form_errors(form.commandeDate) }}
+                    </div>
+                    <span id="dispo"></span>
+                    <div class="form-group">
+                        {{ form_row(form.commandeTypeBillet) }}
+                    </div>
+
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                    
+                    <input type="submit" />
+ 
+             </div>
+        </div>        
+    </form>   
+
+<script>
+    $(".datepicker").datepicker({
+            dateFormat: 'dd-mm-yy',     
+    }).attr("readonly","readonly");
+</script>
 
 {% endblock %}
 

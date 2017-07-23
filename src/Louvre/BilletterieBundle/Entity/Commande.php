@@ -3,6 +3,7 @@
 namespace Louvre\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commande
@@ -25,6 +26,12 @@ class Commande
      * @var \Date
      *
      * @ORM\Column(name="commande_date", type="date")
+     * @Assert\Range(
+     *     min ="today",
+     *     max ="+2 years",
+     *     minMessage="date non valide",
+     *     maxMessage="date non valide"
+     * )
      */
     private $commandeDate;
 
@@ -46,6 +53,11 @@ class Commande
      * @var int
      *
      * @ORM\Column(name="commande_prixTotal", type="integer")
+     * @Assert\Range(
+     *     min = 1,
+     *     max = 20,
+     *     minMessage="Veuillez choisir un nombre de billet compris entre 1 et 20",
+     *     maxMessage="Veuillez choisir un nombre de billet compris entre 1 et 20")
      */
     private $commandePrixTotal;
 
@@ -60,6 +72,10 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="commande_mail", type="string", length=255)
+     * @Assert\Email(
+     *     checkHost = true,
+     *     message = "email non valide",
+     *     )
      */
     private $commandeMail;
 

@@ -163,28 +163,5 @@ class Details
     {
         return $this->visitorCountry;
     }
-
-    /**
-     * Set visitorReduc
-     *
-     * @param boolean $visitorReduc
-     *
-     * @return Details
-     */
-    public function setVisitorReduc($visitorReduc)
-    {
-        $this->visitorReduc = $visitorReduc;
-
-        return $this;
-    }
-
-    /**
-     * Get visitorReduc
-     *
-     * @return boolean
-     */
-    public function getVisitorReduc()
-    {
-        return $this->visitorReduc;
-    }
 }
+
