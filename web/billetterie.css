@@ -1,7 +1,6 @@
-/*body {
-    padding-top: 70px;
-    padding-bottom: 70px;
-}*/
+body {
+   
+}
 
 #titrePage{
     color : antiquewhite;
@@ -16,4 +15,20 @@
     align-items: center;
     padding: 5px;
     margin-bottom: 10px;
+}
+
+.well {
+    margin-bottom: 70px;
+}
+
+.active a{
+    color : black;
+}
+
+input#commande_commandeDate {
+    width : 50%;
+}
+
+input#commande_commandeNbBillet {
+    width : 30%;
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('datepicker-fr.js') }}"></script>
     {{ parent() }}
 
 {% endblock %}
@@ -17,16 +18,14 @@
 
 {% block body %}
 
-  <h1>Billetterie du Louvre !</h1>
-
     <form method="post">
-         <div class="col-xs-6 col-xs-offset-3">
-             <div class="controls">
+         <div class="col-xs-8 col-xs-offset-2 well">
+             <div id="formCommande">
                     {{ form_start(form) }}
                     {{ form_errors(form) }}
                     <div class="form-group label-floating">
                         {{ form_label(form.commandeDate) }}
-                        {{ form_widget(form.commandeDate) }}
+                        <div class="datepicker">{{ form_widget(form.commandeDate) }}</div>
                         {{ form_errors(form.commandeDate) }}
                     </div>
                     <span id="dispo"></span>
@@ -38,15 +37,36 @@
                     {{ form_end(form) }}
                     
                     <input type="submit" />
- 
-             </div>
+                 </div>
         </div>        
     </form>   
-
+</div>
 <script>
+    
+    $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
     $(".datepicker").datepicker({
-            dateFormat: 'dd-mm-yy',     
-    }).attr("readonly","readonly");
+        dateFormat: 'dd-mm-yy',
+        minDate : 0,
+        maxDate : "+1Y",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        beforeShowDay: function(date){
+            var day = date.getDay();
+            var bankHoliday = jQuery.datepicker.formatDate('dd-mm-yy', date);
+            console.log(bankHoliday);        
+            if (day == 0 || day == 2) {
+	           return [false, ''];
+	           } else if (bankHoliday == "27-07-2017" || bankHoliday == "01-11-2017"){
+                return [false, ''];
+               } else {
+	            return [true, ''];
+	           } 
+        },
+        
+    }).attr("readonly","readonly").focus();
+
+    
+
 </script>
 
 {% endblock %}

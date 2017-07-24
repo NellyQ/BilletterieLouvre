@@ -25,18 +25,22 @@
         </div>     
         
         <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <p class="navbar-text">BILLETTERIE</p>
-                </div>
-            </div><!-- /.container -->
+            <nav aria-label="Page navigation">
+                <ul class="pager">
+                    <li class="active"><a href="#">Sélection date, type et nombre de billet</a></li>
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <li class="disabled"><a href="#" >Renseignements visiteur(s)</a></li>
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <li class="disabled"><a href="#" >Paiement</a></li>
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <li class="disabled"><a href="#" >Confirmation</a></li>
+                </ul>
+            </nav><!-- /.container -->
         </nav>
     
     {% block body %}
     
     {% endblock %}
-        
-        <hr>
 
     <footer>
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
