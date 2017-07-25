@@ -26,7 +26,10 @@ class BookingController extends Controller
 
       $request->getSession()->getFlashBag()->add('notice', 'Commande bien enregistrée.');
 
-      return $this->redirectToRoute('louvre_billetterie_details', array('commande_id' => $commande->getCommandeId()));
+      return $this->redirectToRoute('louvre_billetterie_details', array(
+            'commande_id' => $commande->getCommandeId(),
+            'commande_nbBillet' => $commande->getCommandeNbBillet()
+      ));
     }
 
     return $this->render('LouvreBilletterieBundle:Booking:commande.html.twig', array(
@@ -35,7 +38,7 @@ class BookingController extends Controller
   }
     
     public function detailsAction(Request $request)
-  {
+    {
         $details = new Details();
         $form = $this->get('form.factory')->create(DetailsType::class, $details);
         
@@ -47,12 +50,18 @@ class BookingController extends Controller
 
       $request->getSession()->getFlashBag()->add('notice', 'renseignements bien enregistrée.');
 
-      return $this->redirectToRoute('louvre_billetterie_payment', array('commande_id' => $commande->getCommandeId()));
-    }
+      return $this->redirectToRoute('louvre_billetterie_payment');
+        }
 
     return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
       'form' => $form->createView(),
     ));
-  }
+    }
+    
+    public function paymentAction()
+    {
+       
+      return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig');
+    }
 
 }

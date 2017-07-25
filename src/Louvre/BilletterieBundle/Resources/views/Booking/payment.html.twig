@@ -1,0 +1,26 @@
+{# src/Louvre/Billetterie/Resources/views/Booking/commande.html.twig #}
+
+{% extends "::base.html.twig" %}
+
+
+{% block title %}
+  {{ parent() }} - Paiement
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-default">
+        <nav aria-label="Page navigation">
+            <ul class="pager">
+                <li class="disabled" ><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Renseignements visiteur(s)<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="active"><a href="#">Paiement</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Confirmation</a></li>
+            </ul>
+        </nav><!-- /.container -->
+    </nav>
+<h1>Paiement</h1>
+
+{% endblock %}

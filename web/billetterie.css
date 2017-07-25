@@ -32,3 +32,8 @@ input#commande_commandeDate {
 input#commande_commandeNbBillet {
     width : 30%;
 }
+
+input#confirmeCom {
+    display : block;
+    margin: auto;
+}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{{ asset('datepicker-fr.js') }}"></script>
+    <script src="{{ asset('js/datepicker-fr.js') }}"></script>
     {{ parent() }}
 
 {% endblock %}
@@ -17,6 +17,20 @@
 {% endblock %}
 
 {% block body %}
+
+    <nav class="navbar navbar-default">
+        <nav aria-label="Page navigation">
+            <ul class="pager">
+                <li class="active" ><a href="#">Sélection date, type et nombre de billet</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Renseignements visiteur(s)</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disable"><a href="#">Paiement</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Confirmation</a></li>
+            </ul>
+        </nav>
+    </nav>
 
     <form method="post">
          <div class="col-xs-8 col-xs-offset-2 well">
@@ -36,39 +50,12 @@
                     {{ form_rest(form) }}
                     {{ form_end(form) }}
                     
-                    <input type="submit" />
+                    <input id="confirmeCom" class="btn btn-default" type="submit" value= "Je confirme ma commande">
                  </div>
         </div>        
     </form>   
 </div>
-<script>
-    
-    $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
-    $(".datepicker").datepicker({
-        dateFormat: 'dd-mm-yy',
-        minDate : 0,
-        maxDate : "+1Y",
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        beforeShowDay: function(date){
-            var day = date.getDay();
-            var bankHoliday = jQuery.datepicker.formatDate('dd-mm-yy', date);
-            console.log(bankHoliday);        
-            if (day == 0 || day == 2) {
-	           return [false, ''];
-	           } else if (bankHoliday == "27-07-2017" || bankHoliday == "01-11-2017"){
-                return [false, ''];
-               } else {
-	            return [true, ''];
-	           } 
-        },
-        
-    }).attr("readonly","readonly").focus();
 
-    
-
-</script>
+<script src="{{ asset('js/billetterie.js') }}"></script>
 
 {% endblock %}
-
-

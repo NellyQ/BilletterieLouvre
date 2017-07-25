@@ -7,11 +7,22 @@
 {% endblock %}
 
 {% block body %}
+    <nav class="navbar navbar-default">
+        <nav aria-label="Page navigation">
+            <ul class="pager">
+                <li class="disabled"><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="active"><a href="#">Renseignements visiteur(s)</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Paiement</a></li>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <li class="disabled"><a href="#">Confirmation</a></li>
+            </ul>
+        </nav>
+    </nav>
 
-  <h1>DETAILS DES BILLETS !</h1>
-
-<div class="well">
-    <form method="post">
+<form method="post">
+         <div class="col-xs-8 col-xs-offset-2 well">
         {{ form_start(form) }}
 
         {{ form_errors(form) }}
@@ -21,7 +32,8 @@
         {{ form_end(form) }}
 
         <input type="submit" />
-    </form>
-</div>
+        </div>
+</form>
+
 
 {% endblock %}
