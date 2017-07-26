@@ -1,3 +1,6 @@
+var tmp = $;
+var dp = $.datepicker;
+
 
     $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
     $(".datepicker").datepicker({
@@ -8,16 +11,19 @@
         selectOtherMonths: true,
         beforeShowDay: function(date){
             var day = date.getDay();
-            var bankHoliday = jQuery.datepicker.formatDate('dd-mm-yy', date);
-            console.log(bankHoliday);        
+            console.log(dp);
+            var bankHoliday = dp.formatDate('dd-mm-yy', date);
+            console.log(bankHoliday);
+            
             if (day == 0 || day == 2) {
 	           return [false, ''];
 	           } else if (bankHoliday == "27-07-2017" || bankHoliday == "01-11-2017"){
                 return [false, ''];
                } else {
 	            return [true, ''];
-	           } 
-        },
-        
-    }).attr("readonly","readonly").focus();
-    
+	           }                
+            },
+        onSelect: function(date){
+            $('#commande_commandeDate').val(this.value);
+        },    
+    })

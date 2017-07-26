@@ -3,15 +3,15 @@ body {
 }
 
 #titrePage{
-    color : antiquewhite;
+    color : rgb(34,34,34);
     font-family: serif;
     font-size: 2em;
+    margin-left : 20%;
 }
 
 #page-header{
-    background-color: rgb(34,34,34);
+    
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 5px;
     margin-bottom: 10px;

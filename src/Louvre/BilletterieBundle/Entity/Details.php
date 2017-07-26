@@ -21,6 +21,13 @@ class Details
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="commande_id", type="integer")
+     */
+    private $commandeId;
 
     /**
      * @var string
@@ -66,6 +73,30 @@ class Details
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set commandeId
+     *
+     * @param int $commandeId
+     *
+     * @return int
+     */
+    public function setCommandeId($commandeId)
+    {
+        $this->commandeId = $commandeId;
+
+        return $this;
+    }
+    
+    /**
+     * Get commandeId
+     *
+     * @return int
+     */
+    public function getCommandeId()
+    {
+        return $this->commandeId;
     }
 
     /**

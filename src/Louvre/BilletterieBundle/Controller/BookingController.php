@@ -15,6 +15,7 @@ class BookingController extends Controller
     public function commandeAction(Request $request)
         
     {
+        $session = $request->getSession();
         $commande = new Commande();
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
         
@@ -23,13 +24,13 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($commande);
         $em->flush();
+        $session->set('commande_id', $commande->getCommandeId());
+        $session->set('commande_nbBillet', $commande->getCommandeNbBillet());
+            
 
       $request->getSession()->getFlashBag()->add('notice', 'Commande bien enregistrée.');
 
-      return $this->redirectToRoute('louvre_billetterie_details', array(
-            'commande_id' => $commande->getCommandeId(),
-            'commande_nbBillet' => $commande->getCommandeNbBillet()
-      ));
+      return $this->redirectToRoute('louvre_billetterie_details');
     }
 
     return $this->render('LouvreBilletterieBundle:Booking:commande.html.twig', array(
@@ -39,7 +40,13 @@ class BookingController extends Controller
     
     public function detailsAction(Request $request)
     {
+        $session = $request->getSession();
+        $commandeId = $session->get('commande_id');
+        $commandeNbBillet = $session->get('commande_nbBillet');
+        
         $details = new Details();
+        $details->setCommandeId($commandeId);
+        
         $form = $this->get('form.factory')->create(DetailsType::class, $details);
         
 
@@ -54,7 +61,9 @@ class BookingController extends Controller
         }
 
     return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
-      'form' => $form->createView(),
+        'form' => $form->createView(),
+        'commande_id'=> $commandeId,
+        'commande_nbBillet' => $commandeNbBillet
     ));
     }
     

@@ -27,7 +27,7 @@ class CommandeType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
-                'class' => 'datepicker'
+                'class' => ''
                 ]
             ))
             ->add('commandeTypeBillet', ChoiceType::class, array(

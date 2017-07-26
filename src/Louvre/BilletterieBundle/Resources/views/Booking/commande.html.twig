@@ -25,7 +25,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 <li class="disabled"><a href="#">Renseignements visiteur(s)</a></li>
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="disable"><a href="#">Paiement</a></li>
+                <li class="disabled"><a href="#">Paiement</a></li>
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 <li class="disabled"><a href="#">Confirmation</a></li>
             </ul>
@@ -39,7 +39,8 @@
                     {{ form_errors(form) }}
                     <div class="form-group label-floating">
                         {{ form_label(form.commandeDate) }}
-                        <div class="datepicker">{{ form_widget(form.commandeDate) }}</div>
+                        {{ form_widget(form.commandeDate) }}
+                        <div class="datepicker"></div>
                         {{ form_errors(form.commandeDate) }}
                     </div>
                     <span id="dispo"></span>
