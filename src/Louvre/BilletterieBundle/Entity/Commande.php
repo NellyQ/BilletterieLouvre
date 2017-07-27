@@ -78,7 +78,7 @@ class Commande
      *     )
      */
     private $commandeMail;
-
+    
 
     /**
      * Get id
@@ -93,7 +93,7 @@ class Commande
     /**
      * Set commandeDate
      *
-     * @param \DateTime $commandeDate
+     * @param \Date $commandeDate
      *
      * @return Commande
      */
@@ -107,7 +107,7 @@ class Commande
     /**
      * Get commandeDate
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getCommandeDate()
     {
@@ -233,5 +233,6 @@ class Commande
     {
         return $this->commandeMail;
     }
+    
 }
 

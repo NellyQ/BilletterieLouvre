@@ -30,12 +30,16 @@
         {{ form_widget(form) }}
 
         {{ form_end(form) }}
+             
+             <div> Prix du billet : {{" "}} </div>
 
-        <input type="submit" />
+        <input id="confirmeDetails" class="btn btn-default" type="submit" value= "Je confirme ma commande" type="submit" />
         </div>
 </form>
 
-{{commande_id}}
-{{commande_nbBillet}}
+{{commande.commandeId}}
+{{commande.commandeNbBillet}}
+
+<script src="{{ asset('js/billetterie.js') }}"></script>
 
 {% endblock %}

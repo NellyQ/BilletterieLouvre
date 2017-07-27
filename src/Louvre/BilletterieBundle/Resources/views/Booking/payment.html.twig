@@ -2,6 +2,13 @@
 
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ asset('js/billetterie.js') }}"></script>
+    {{ parent() }}
+
+{% endblock %}
 
 {% block title %}
   {{ parent() }} - Paiement
@@ -21,6 +28,33 @@
             </ul>
         </nav><!-- /.container -->
     </nav>
-<h1>Paiement</h1>
+
+    <form id="stripe">
+      <div class="group">
+        <label>
+          <span>Name</span>
+          <input name="cardholder-name" class="field" placeholder="Jane Doe" />
+        </label>
+        <label>
+          <span>Email</span>
+          <input class="field" placeholder="abc@mail.com" type="mail" />
+        </label>
+      </div>
+      <div class="group">
+        <label>
+          <span>Card</span>
+          <div id="card-element" class="field"></div>
+        </label>
+      </div>
+      <button type="submit">Pay $25</button>
+      <div class="outcome">
+        <div class="error" role="alert"></div>
+        <div class="success">
+          Success! Your Stripe token is <span class="token"></span>
+        </div>
+      </div>
+    </form>
+
+
 
 {% endblock %}

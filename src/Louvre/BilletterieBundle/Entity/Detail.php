@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Details
+ * Detail
  *
  * @ORM\Table(name="details")
  * @ORM\Entity(repositoryClass="Louvre\BilletterieBundle\Repository\DetailsRepository")
  */
-class Details
+class Detail
 {
     /**
      * @var int
@@ -63,8 +63,12 @@ class Details
      * @ORM\Column(name="visitor_reduc", type="boolean")
      */
     private $visitorReduc;
-
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Commande", inversedBy="details")
+     */
+    private $commande;
+    
     /**
      * Get id
      *
@@ -218,4 +222,24 @@ class Details
     {
         return $this->visitorReduc;
     }
+    
+    /**
+     * Set commande
+     *
+     */
+    public function setCommande(Commande $commande)
+    {
+        $this->commande = $commande;
+        return $this;
+    }
+    /**
+     * Get commande
+     *
+     * @return string
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+    
 }

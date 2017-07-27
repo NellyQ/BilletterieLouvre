@@ -3,18 +3,15 @@
 namespace Louvre\BilletterieBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class DetailsType extends AbstractType
+class DetailType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,9 +28,9 @@ class DetailsType extends AbstractType
                 'format' => 'dd-MM-yyyy',
                 'years' => range(date('Y') -100, date('Y')),
                 ))
-            ->add('visitorCountry', ChoiceType::class, array(
+            ->add('visitorCountry', CountryType::class, array(
                 'label' => 'Pays',
-                'choices' => array('France' => 'France', 'Allemagne' => 'Allemagne'),
+                'placeholder' => 'Choisissez un pays',
             ))
             ->add('visitorReduc', CheckboxType::class, array(
                 'label' => 'Tarif réduit',
@@ -46,7 +43,7 @@ class DetailsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Louvre\BilletterieBundle\Entity\Details'
+            'data_class' => 'Louvre\BilletterieBundle\Entity\Detail'
         ));
     }
 
@@ -55,7 +52,7 @@ class DetailsType extends AbstractType
      */
     public function getName()
     {
-        return 'details';
+        return 'detail';
     }
 
 
