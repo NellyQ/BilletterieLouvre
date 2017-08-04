@@ -6,7 +6,7 @@ namespace Louvre\BilletterieBundle\Controller;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Louvre\BilletterieBundle\Entity\Commande;
 use Louvre\BilletterieBundle\Form\CommandeType;
 use Louvre\BilletterieBundle\Entity\Detail;
@@ -21,18 +21,17 @@ class BookingController extends Controller
         
     {   
         $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
+        $normalizers = array(new DateTimeNormalizer('d-m-Y'));
 
         $serializer = new Serializer($normalizers, $encoders);
         
-        //On récupère toutes les commandes déjà réalisées
-        $repository = $this->getDoctrine()
-        ->getManager()
-        ->getRepository('LouvreBilletterieBundle:Commande');
-        
-        $commandes = $repository->findAll();
+        //Récupération du nombre total de billet déjà par jour avec la fonction totalNbBilletJour() définit dans CommandeRepository.php
+        $arrayTotalBillets = $this->getDoctrine()
+                                    ->getManager()
+                                    ->getRepository('LouvreBilletterieBundle:Commande')
+                                    ->totalNbBilletJour();
         //On sérialise les données
-        $jsonCommandes = $serializer->serialize($commandes, 'json');
+        $jsonTotalBillets = $serializer->serialize($arrayTotalBillets, 'json');
         
         $session = $request->getSession();
         $commande = new Commande();
@@ -51,8 +50,8 @@ class BookingController extends Controller
 
     return $this->render('LouvreBilletterieBundle:Booking:commande.html.twig', array(
         'form' => $form->createView(),
-        'commandes'=> $commandes,
-        'jsonCommandes' => $jsonCommandes,
+        'arrayTotalBillets'=> $arrayTotalBillets,
+        'jsonTotalBillets' => $jsonTotalBillets,
     ));
   }
     

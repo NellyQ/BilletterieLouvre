@@ -9,5 +9,18 @@ namespace Louvre\BilletterieBundle\Repository;
  * repository methods below.
  */
 class CommandeRepository extends \Doctrine\ORM\EntityRepository
-{
+{ 
+    /*Nombre total de billet vendu par jour*/
+    public function totalNbBilletJour()
+    {
+        $qb = $this->createQueryBuilder('c');
+        
+        $qb ->select('c.commandeDate')
+            ->addSelect('SUM(c.commandeNbBillet) AS nbTotal')
+            ->groupBy('c.commandeDate');
+
+        return $qb->getQuery()->getArrayResult();
+        
+    }
 }
+

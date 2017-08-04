@@ -1,97 +1,45 @@
 var tmp = $;
 var dp = $.datepicker;
 
+//JSON
+var totalBillets = JSON.parse(json_totalBillets);
+console.log(totalBillets);
 
 $.datepicker.setDefaults($.datepicker.regional[ "fr" ]);
+
 $(".datepicker").datepicker({
     dateFormat: 'dd-mm-yy',
     minDate : 0,
     maxDate : "+1Y",
     showOtherMonths: true,
     selectOtherMonths: true,
-    beforeShowDay: function(date){
-        var day = date.getDay();
-        var bankHoliday = dp.formatDate('dd-mm-yy', date);
-                    
-        if (day == 0 || day == 2) {
-	       return [false, ''];
-	       } else if (bankHoliday == "27-07-2017" || bankHoliday == "01-11-2017"){
+    beforeShowDay: 
+    
+        function disabled(date){
+            
+            //Récupération du nombre correspondant au jour de la semaine
+            var dayNumber = date.getDay();
+            
+            //Récupération du jour et du mois pour chaque date à afficher
+            var day = date.getDate();
+            var month = date.getMonth()+1;
+            
+            var daysShown = dp.formatDate('dd-mm-yy', date); 
+            
+            //Désactivation des dimanches (0) et mardi(2) ainsi que des 01-05, 01-11 et 25-12 quelque soit l'année.
+            if (dayNumber == 0 || dayNumber == 2) {
                return [false, ''];
-            } else {
-	           return [true, ''];
-	           }                
-            },
+               } else if (day == '1' & month == "5" || day == '1' & month == "11" || day == '25' & month == "12"  ){
+                   return [false, ''];
+                } else {
+                   return [true, ''];
+                   };              
+        },
+
     onSelect: function(date){
         $('#commande_commandeDate').val(this.value);
     },    
 });
 
-//JSON
-var commandes = JSON.parse(json_commandes);
-console.log(commandes);
 
 
-//STRIPE
-var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-var elements = stripe.elements();
-
-var card = elements.create('card', {
-  style: {
-    base: {
-      iconColor: '#666EE8',
-      color: '#31325F',
-      lineHeight: '40px',
-      fontWeight: 300,
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSize: '15px',
-
-      '::placeholder': {
-        color: '#CFD7E0',
-      },
-    },
-  }
-});
-card.mount('#card-element');
-
-function setOutcome(result) {
-  var successElement = document.querySelector('.success');
-  var errorElement = document.querySelector('.error');
-  successElement.classList.remove('visible');
-  errorElement.classList.remove('visible');
-
-  if (result.token) {
-    // Use the token to create a charge or a customer
-    // https://stripe.com/docs/charges
-    successElement.querySelector('.token').textContent = result.token.id;
-    successElement.classList.add('visible');
-  } else if (result.error) {
-    errorElement.textContent = result.error.message;
-    errorElement.classList.add('visible');
-  }
-}
-
-card.on('change', function(event) {
-  setOutcome(event);
-});
-
-document.querySelector('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var form = document.querySelector('form');
-  var extraDetails = {
-    name: form.querySelector('input[name=cardholder-name]').value,
-  };
-  stripe.createToken(card, extraDetails).then(setOutcome);
-});
-
-function stripeTokenHandler(token) {
-  // Insert the token ID into the form so it gets submitted to the server
-  var form = document.getElementById('payment-form');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
-
-  // Submit the form
-  form.submit();
-}
