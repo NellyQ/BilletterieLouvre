@@ -25,7 +25,7 @@ class BookingController extends Controller
 
         $serializer = new Serializer($normalizers, $encoders);
         
-        //Récupération du nombre total de billet déjà par jour avec la fonction totalNbBilletJour() définit dans CommandeRepository.php
+        //Récupération du nombre total de billet déjà vendu par jour avec la fonction totalNbBilletJour() définit dans CommandeRepository.php
         $arrayTotalBillets = $this->getDoctrine()
                                     ->getManager()
                                     ->getRepository('LouvreBilletterieBundle:Commande')
@@ -40,13 +40,13 @@ class BookingController extends Controller
         
         //Enregistrement des données dans la bdd si le formulaire est valide et renvoi vers la page details
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($commande);
-        $em->flush();
-        $session->set('commande', $commande);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commande);
+            $em->flush();
+            $session->set('commande', $commande);
 
-      return $this->redirectToRoute('louvre_billetterie_details');
-    }
+            return $this->redirectToRoute('louvre_billetterie_details');
+        }
 
     return $this->render('LouvreBilletterieBundle:Booking:commande.html.twig', array(
         'form' => $form->createView(),
