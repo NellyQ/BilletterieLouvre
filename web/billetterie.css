@@ -40,9 +40,14 @@ input#confirmeCom {
     margin: auto;
 }
 
+/*Mise en forme datepicker, couleur selon la disponibilité des dates*/
 td.dispo a.ui-state-default {
   background-color: palegreen;
   background-image: none;
+}
+
+td.dispo a.ui-state-default.ui-state-active  {
+  border : 1px solid green;
 }
 
 td.limit a.ui-state-default {
@@ -50,12 +55,25 @@ td.limit a.ui-state-default {
   background-image: none;
 }
 
+td.limit a.ui-state-default.ui-state-active  {
+  border : 1px solid orangered;
+}
 td.indispo.ui-state-disabled span {
   background-color: red;
   background-image: none;
   color : black;
 }
 
+/*Details*/
+ul.details li {
+  margin-bottom : 20px;
+  list-style-type : none;
+}
+
+h2 {
+  font-size: 1.2em;
+  text-decoration : underline; 
+}
 
 /*stripe*/* {
   font-family: "Helvetica Neue", Helvetica;

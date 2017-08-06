@@ -17,8 +17,16 @@ class GlobalType extends AbstractType
             ->add('details', CollectionType::class, [
                 'entry_type'         => DetailType::class,
                 'allow_add'    => true,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'prototype' => true,
+
             ])
             ->add('Valider', SubmitType::class);
     }
+
+
+    public function getName()
+        {
+            return 'global';
+        }
 }

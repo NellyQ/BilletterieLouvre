@@ -79,6 +79,10 @@ class Commande
      */
     private $commandeMail;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Detail", mappedBy="commande")
+     */
+    private $details;
 
     /**
      * Get id
@@ -232,6 +236,26 @@ class Commande
     public function getCommandeMail()
     {
         return $this->commandeMail;
+    }
+    
+    public function __construct()
+    {
+        $this->details = new ArrayCollection();
+    }
+
+    public function addDetail(Detail $detail)
+    {
+        $this->details[] = $detail;
+    }
+
+    public function removeDetail(Detail $detail)
+    {
+        $this->details->removeElement($detail);
+    }
+    
+    public function getDetails()
+    {
+        return $this->details;
     }
     
 }

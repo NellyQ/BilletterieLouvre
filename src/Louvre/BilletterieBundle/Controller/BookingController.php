@@ -65,7 +65,7 @@ class BookingController extends Controller
         $detail = new Detail();
         $detail->setCommandeId($commandeId);
         
-        $form = $this->get('form.factory')->create(DetailType::class, $detail);
+        $form = $this->get('form.factory')->create(GlobalType::class, $commande);
         
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
