@@ -19,19 +19,24 @@ class DetailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            
             ->add('visitorName', TextType::class, array(
                 'label' => 'Nom'))
+            
             ->add('visitorFisrtname', TextType::class, array(
                 'label' => 'Prénom'))
+            
             ->add('visitorAge', DateType::class, array(
                 'label' => 'Date de naissance',
                 'format' => 'dd-MM-yyyy',
                 'years' => range(date('Y') -100, date('Y')),
                 ))
+            
             ->add('visitorCountry', CountryType::class, array(
                 'label' => 'Pays',
                 'placeholder' => 'Choisissez un pays',
             ))
+            
             ->add('visitorReduc', CheckboxType::class, array(
                 'label' => 'Tarif réduit',
                 'required' => false));

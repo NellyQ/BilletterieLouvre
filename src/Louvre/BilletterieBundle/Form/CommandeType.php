@@ -37,7 +37,10 @@ class CommandeType extends AbstractType
                 'expanded'  => true,)
             )
             ->add('commandeNbBillet', IntegerType::class, array(
-                'label' => 'Choisissez le nombre de billet')
+                'label' => 'Choisissez le nombre de billet',
+                'data' => 1,
+                'attr' => array('min'=> 1, 'max' => 10),)
+                  
             );
     }
     

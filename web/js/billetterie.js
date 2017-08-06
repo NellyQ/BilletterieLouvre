@@ -1,6 +1,9 @@
 var tmp = $;
 var dp = $.datepicker;
 
+//Tableau contenant les dates de commandes et le total de billet vendu par jour
+var totalBillets = JSON.parse(json_totalBillets);
+
 $.datepicker.setDefaults($.datepicker.regional['fr']);
 
 $(".datepicker").datepicker({
@@ -23,8 +26,7 @@ $(".datepicker").datepicker({
             //Dates affichées sur le calendrier au format dd-mm-yy
             var daysShown = dp.formatDate('dd-mm-yy',date);
             
-            //Tableau contenant les dates de commandes et le total de billet vendu par jour
-            var totalBillets = JSON.parse(json_totalBillets);
+            
             
             //Boucle sur le tableau totalBillet pour comparer les dates affichées aux nombre de billets restants pour chaque date
             for (i=0; i<totalBillets.length; i++){
@@ -49,8 +51,19 @@ $(".datepicker").datepicker({
         },
     
     onSelect: function (date) {
+        $('#billetsRestants').html("");
         $('#commande_commandeDate').val(this.value);
-    } 
+        
+        for (i=0; i<totalBillets.length; i++){
+                var dateDispo = totalBillets[i].commandeDate
+                var billetsRestants = 1000 - (totalBillets[i].nbTotal);
+            if ((this.value == dateDispo)&&((billetsRestants <=10)&&( billetsRestants>0))){
+                $('#billetsRestants').html("Il reste " +billetsRestants+ " billet(s) disponible(s) pour cette date");
+                $('#commande_commandeNbBillet').attr('max', billetsRestants);
+            }
+        
+    };
+    },
        
 });
 
