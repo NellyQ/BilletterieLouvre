@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,12 +35,17 @@ class DetailType extends AbstractType
             
             ->add('visitorCountry', CountryType::class, array(
                 'label' => 'Pays',
-                'placeholder' => 'Choisissez un pays',
+                'preferred_choices' => array('FR','GB','DE', 'IT', 'ES', 'IE', 'CH'),
+                'data' => 'FR',
             ))
             
             ->add('visitorReduc', CheckboxType::class, array(
                 'label' => 'Tarif réduit',
-                'required' => false));
+                'required' => false))
+            
+            ->add('prixBillet', IntegerType::class, array(
+                'label' => 'Prix du billet',
+                'disabled' => true));
     }
     
     /**

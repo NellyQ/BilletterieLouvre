@@ -31,16 +31,15 @@
 
 <form method="post">
          <div class="col-xs-8 col-xs-offset-2 well">
-
-             <ul class="details" data-prototype = "{{form_widget(form.details.vars.prototype)|e('html_attr')}}">
+             {{ form_start(form) }}
+             {{ form_errors(form) }}
+             <ul class="details" data-prototype = "{{form_widget(form.details.vars.prototype)|e('html_attr')}}"> 
             </ul>
-
-        <input id="confirmeDetails" class="btn btn-default" type="submit" value= "Je confirme ma commande" type="submit" />
+             {{ form_row(form.valider) }}
+             {{ form_rest(form) }}
+             {{ form_end(form) }}
         </div>
 </form>
-
-{{commande.commandeId}}
-{{commande.commandeNbBillet}}
 
 <script>
     var commandeNbBillets = '{{commande.commandeNbBillet}}';
@@ -75,7 +74,7 @@ function addDetailForm($collectionHolder, $newLinkLi) {
 
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
-        var newForm = prototype.replace('/__name__/g', index);
+        var newForm = prototype.replace(/__name__/g, index);
 
         // increase the index with one for the next item
         $collectionHolder.data('index', index + 1);

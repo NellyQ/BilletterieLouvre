@@ -15,13 +15,14 @@ class GlobalType extends AbstractType
     {
         $builder
             ->add('details', CollectionType::class, [
-                'entry_type'         => DetailType::class,
-                'allow_add'    => true,
+                'label' => " ",
+                'entry_type' => DetailType::class,
+                'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
 
             ])
-            ->add('Valider', SubmitType::class);
+            ->add('valider', SubmitType::class);
     }
 
 

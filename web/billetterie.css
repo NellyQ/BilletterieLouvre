@@ -28,7 +28,7 @@ body {
 }
 
 input#commande_commandeDate {
-    width : 50%;
+    display : none;
 }
 
 input#commande_commandeNbBillet {

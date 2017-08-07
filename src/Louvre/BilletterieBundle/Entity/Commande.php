@@ -4,6 +4,7 @@ namespace Louvre\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Commande
@@ -80,7 +81,7 @@ class Commande
     private $commandeMail;
     
     /**
-     * @ORM\OneToMany(targetEntity="Detail", mappedBy="commande")
+     * @ORM\OneToMany(targetEntity="Detail", mappedBy="commande", cascade={"persist"})
      */
     private $details;
 

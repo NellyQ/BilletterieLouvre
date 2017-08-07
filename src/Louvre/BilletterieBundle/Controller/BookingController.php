@@ -7,6 +7,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Louvre\BilletterieBundle\Entity\Commande;
 use Louvre\BilletterieBundle\Form\CommandeType;
 use Louvre\BilletterieBundle\Entity\Detail;
@@ -61,17 +62,15 @@ class BookingController extends Controller
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
         $commandeNbBillet = $commande->getCommandeNbBillet();
-        
-        $detail = new Detail();
-        $detail->setCommandeId($commandeId);
-        
+                      
         $form = $this->get('form.factory')->create(GlobalType::class, $commande);
         
-
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        $em = $this->getDoctrine()->getManager();
+        
+        $session->set('commande', $commande);
+        /*$em = $this->getDoctrine()->getManager();
         $em->persist($detail);
-        $em->flush();
+        $em->flush();*/
 
       $request->getSession()->getFlashBag()->add('notice', 'renseignements bien enregistrée.');
 
@@ -84,10 +83,15 @@ class BookingController extends Controller
     ));
     }
     
-    public function paymentAction()
+    public function paymentAction(Request $request)
     {
-       
-      return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig');
+        $session = $request->getSession();
+        $commande = $session->get('commande');
+        
+        
+      return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
+          'commande' => $commande,
+      ));
     }
 
 }

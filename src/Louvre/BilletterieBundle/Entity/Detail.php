@@ -58,6 +58,13 @@ class Detail
     private $visitorCountry;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="prix_billet", type="int", length=255)
+     */
+    private $prixBillet;
+    
+    /**
      * @var bool
      *
      * @ORM\Column(name="visitor_reduc", type="boolean")
@@ -240,6 +247,25 @@ class Detail
     public function getCommande()
     {
         return $this->commande;
+    }
+    
+    /**
+     * Set commande
+     *
+     */
+    public function setPrixBillet($prixBillet)
+    {
+        $this->prixBillet = $prixBillet;
+        return $this;
+    }
+    /**
+     * Get commande
+     *
+     * @return string
+     */
+    public function getPrixBillet()
+    {
+        return $this->prixBillet;
     }
     
 }
