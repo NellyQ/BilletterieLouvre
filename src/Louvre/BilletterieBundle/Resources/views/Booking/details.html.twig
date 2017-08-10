@@ -1,89 +1,150 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #}
+{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} {% block stylesheets %}
 
-{% extends "::base.html.twig" %}
-
-{% block stylesheets %}
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    {{ parent() }}
-
-{% endblock %}
-
-{% block title %}
-  {{ parent() }} - Renseignements
-{% endblock %}
-
-{% block body %}
-    <nav class="navbar navbar-default">
-        <nav aria-label="Page navigation">
-            <ul class="pager">
-                <li class="disabled"><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="active"><a href="#">Renseignements visiteur(s)</a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="disabled"><a href="#">Paiement</a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="disabled"><a href="#">Confirmation</a></li>
-            </ul>
-        </nav>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/datepicker-fr.js') }}"></script>
+{{ parent() }} {% endblock %} {% block title %} {{ parent() }} - Renseignements {% endblock %} {% block body %}
+<nav class="navbar navbar-default">
+    <nav aria-label="Page navigation">
+        <ul class="pager">
+            <li class="disabled"><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <li class="active"><a href="#">Renseignements visiteur(s)</a></li>
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <li class="disabled"><a href="#">Paiement</a></li>
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <li class="disabled"><a href="#">Confirmation</a></li>
+        </ul>
     </nav>
+</nav>
 
 <form method="post">
-         <div class="col-xs-8 col-xs-offset-2 well">
-             {{ form_start(form) }}
-             {{ form_errors(form) }}
-             <ul class="details" data-prototype = "{{form_widget(form.details.vars.prototype)|e('html_attr')}}"> 
-            </ul>
-             {{ form_row(form.valider) }}
-             {{ form_rest(form) }}
-             {{ form_end(form) }}
-        </div>
+    <div class="col-xs-8 col-xs-offset-2 well">
+        {{ form_start(form) }} {{ form_errors(form) }}
+        <ul class="details" data-prototype="{{form_widget(form.details.vars.prototype)|e('html_attr')}}">
+        </ul>
+        {{ form_row(form.valider) }} {{ form_rest(form) }} {{ form_end(form) }}
+    </div>
 </form>
 
 <script>
     var commandeNbBillets = '{{commande.commandeNbBillet}}';
-    
+    var json_CommandeDate = '{{jsonCommandeDate|raw}}';
+
     var $collectionHolder;
 
-// setup an "add a tag" link
-var $newLinkLi = $('<li></li>').append();
+    // setup an "add a tag" link
+    var $newLinkLi = $('<li></li>').append();
 
-    jQuery(document).ready(function() {
+    $(document).ready(function() {
 
-    // Get the ul that holds the collection of tags
-    $collectionHolder = $('ul.details');
+        $collectionHolder = $('ul.details');
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
+        $collectionHolder.append($newLinkLi);
 
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
         addDetailForm($collectionHolder, $newLinkLi);
 
-});
-function addDetailForm($collectionHolder, $newLinkLi) {
-    for (i=0;i<commandeNbBillets;i++){
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
 
-        // get the new index
-        var index = $collectionHolder.data('index');
+        //if tarif réduit checked $('.prixIndCalcul').html('10€')
 
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, index);
+    });
 
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
+    function addDetailForm($collectionHolder, $newLinkLi) {
+        for (i = 0; i < commandeNbBillets; i++) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
 
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i+1) + " : </h2>" + newForm+ "Prix du billet : ");
-        $newLinkLi.before($newFormLi);
-        }};
-    
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li
+            var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'></span></div><div class='global_details_" + i + "_visitorReduc'></div>");
+            $newLinkLi.before($newFormLi);
+
+
+            //Affichage du datepicker
+            $.datepicker.setDefaults({
+                yearRange: 60,
+                defaultDate: -365 * 20
+            });
+
+            $('#global_details_' + i + '_visitorAge').datepicker({
+                dateFormat: "dd-mm-yy",
+                yearRange: '-100y:c+nn',
+                maxDate: "-1",
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                onSelect: function definePrice(date) {
+
+                    //Calcul de l'âge du visiteur
+                    var j = this.id;
+
+                    var visitorBirthday = $(this).val();
+                    visitorBirthday = visitorBirthday.split('-');
+
+                    var commandeDate = JSON.parse(json_CommandeDate);
+                    commandeDate = commandeDate.split('-');
+
+                    var birthDay = visitorBirthday[0];
+                    var birthMonth = visitorBirthday[1];
+                    var commandeDateDay = commandeDate[0];
+                    var commandeDateMonth = commandeDate[1];
+                    var age = commandeDate[2] - visitorBirthday[2];
+
+                    if (commandeDateMonth < birthMonth || commandeDateMonth == birthMonth && commandeDateDay < birthDay) {
+                        age--;
+                    };
+                    
+                    //Calcul du prix selon l'âge
+                    if (age < 4) {
+                        $('.' + j).html('0,00 €');
+                        var prixInd = 0;
+                    } else if (age >= 4 && age < 12) {
+                        $('.' + j).html('8,00 €');
+                        var prixInd = 8;
+                    } else if (age >= 12 && age < 60) {
+                        $('.' + j).html('16,00 €');
+                        var prixInd = 16;
+                    } else if (age >= 60) {
+                        $('.' + j).html('12,00 €');
+                        var prixInd = 12;
+                    };
+
+                    prixAvantReduc = $('.' + j).html();
+                    console.log(prixAvantReduc);
+                },
+
+            });
+
+            //Application du tarif réduit
+            caseCoche = $('#global_details_' + i + '_visitorReduc');
+            caseCoche.change(function() {
+                var k = this.id;
+
+                if (this.checked) {
+                    $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite');
+                    $('span.' + k).html('10,00 €');
+                } else {
+                    $('div.' + k).empty();
+                    $('span.' + k).html(prixAvantReduc);
+                };
+            });
+
+        }
+    };
+
 </script>
 
 {% endblock %}

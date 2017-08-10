@@ -1,5 +1,4 @@
-var tmp = $;
-var dp = $.datepicker;
+
 
 //Tableau contenant les dates de commandes et le total de billet vendu par jour
 var totalBillets = JSON.parse(json_totalBillets);
@@ -24,7 +23,7 @@ $(".datepicker").datepicker({
             var month = date.getMonth() + 1;
             
             //Dates affichées sur le calendrier au format dd-mm-yy
-            var daysShown = dp.formatDate('dd-mm-yy',date);
+            var daysShown = $.datepicker.formatDate('dd-mm-yy',date);
             
             
             
@@ -66,47 +65,3 @@ $(".datepicker").datepicker({
     },
        
 });
-
-//Affichage Multiple de formulaire détail
-
-var commandeNbBillets = '{{commande.commandeNbBillet}}';
-    
-var $collectionHolder;
-
-// setup an "add a tag" link
-var $newLinkLi = $('<li></li>').append();
-
-    jQuery(document).ready(function() {
-
-    // Get the ul that holds the collection of tags
-    $collectionHolder = $('ul.details');
-
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-        addDetailForm($collectionHolder, $newLinkLi);
-
-});
-function addDetailForm($collectionHolder, $newLinkLi) {
-    for (i=0;i<commandeNbBillets;i++){
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
-
-        // get the new index
-        var index = $collectionHolder.data('index');
-
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        var newForm = prototype.replace('/__name__/g', index);
-
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
-
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        $newLinkLi.before($newFormLi);
-        }};

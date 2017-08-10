@@ -75,6 +75,15 @@ h2 {
   text-decoration : underline; 
 }
 
+.prixBilletInd {
+  font-size: 1.2em;
+}
+
+.prixIndCalcul {
+  
+  font-size: 1em;
+}
+
 /*stripe*/* {
   font-family: "Helvetica Neue", Helvetica;
   font-size: 15px;

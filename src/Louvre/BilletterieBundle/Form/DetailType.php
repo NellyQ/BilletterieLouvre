@@ -29,8 +29,11 @@ class DetailType extends AbstractType
             
             ->add('visitorAge', DateType::class, array(
                 'label' => 'Date de naissance',
+                'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y') -100, date('Y')),
+                'attr' => [
+                'class' => 'datepicker'
+                ]
                 ))
             
             ->add('visitorCountry', CountryType::class, array(
@@ -41,11 +44,8 @@ class DetailType extends AbstractType
             
             ->add('visitorReduc', CheckboxType::class, array(
                 'label' => 'Tarif réduit',
-                'required' => false))
-            
-            ->add('prixBillet', IntegerType::class, array(
-                'label' => 'Prix du billet',
-                'disabled' => true));
+                'required' => false));
+
     }
     
     /**

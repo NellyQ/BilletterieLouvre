@@ -62,7 +62,18 @@ class BookingController extends Controller
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
         $commandeNbBillet = $commande->getCommandeNbBillet();
-                      
+        
+        //Récupération et sérialization de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new DateTimeNormalizer('d-m-Y'));
+
+        $serializer = new Serializer($normalizers, $encoders);
+        $commandeDate = $commande->getCommandeDate();
+        //On sérialise les données
+        $jsonCommandeDate = $serializer->serialize($commandeDate, 'json');
+        
+        
+        //Création du formulaire Global
         $form = $this->get('form.factory')->create(GlobalType::class, $commande);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -80,6 +91,7 @@ class BookingController extends Controller
     return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
         'form' => $form->createView(),
         'commande'=> $commande,
+        'jsonCommandeDate'=> $jsonCommandeDate,
     ));
     }
     
