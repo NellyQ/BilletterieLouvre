@@ -13,6 +13,7 @@ use Louvre\BilletterieBundle\Form\CommandeType;
 use Louvre\BilletterieBundle\Entity\Detail;
 use Louvre\BilletterieBundle\Form\DetailType;
 use Louvre\BilletterieBundle\Form\GlobalType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -75,9 +76,11 @@ class BookingController extends Controller
         
         //Création du formulaire Global
         $form = $this->get('form.factory')->create(GlobalType::class, $commande);
+        $form -> add('valider', SubmitType::class, array(
+                        'label' => "Valider la commande"));
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        
+            
         $session->set('commande', $commande);
         /*$em = $this->getDoctrine()->getManager();
         $em->persist($detail);
@@ -99,10 +102,14 @@ class BookingController extends Controller
     {
         $session = $request->getSession();
         $commande = $session->get('commande');
+        $commandeId = $commande->getCommandeId();
+        $commandePrixTotal = $commande->getCommandePrixTotal();
         
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
           'commande' => $commande,
+          'commandePrixTotal' => $commandePrixTotal,
+          'commandeId' => $commandeId,
       ));
     }
 

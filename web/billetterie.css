@@ -79,10 +79,14 @@ h2 {
   font-size: 1.2em;
 }
 
-.prixIndCalcul {
-  
+.prixBilletInd span {
   font-size: 1em;
 }
+
+#global_commandePrixTotal {
+  display : none;
+}
+
 
 /*stripe*/* {
   font-family: "Helvetica Neue", Helvetica;

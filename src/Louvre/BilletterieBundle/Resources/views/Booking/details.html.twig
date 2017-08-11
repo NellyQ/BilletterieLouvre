@@ -24,7 +24,11 @@
         {{ form_start(form) }} {{ form_errors(form) }}
         <ul class="details" data-prototype="{{form_widget(form.details.vars.prototype)|e('html_attr')}}">
         </ul>
-        {{ form_row(form.valider) }} {{ form_rest(form) }} {{ form_end(form) }}
+        <div class='prixBilletInd'> Prix Total : <span type='text'  class='prixTotal'></span></div>
+        {{ form_row(form.commandePrixTotal) }}
+        {{ form_row(form.valider) }} 
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
     </div>
 </form>
 
@@ -46,11 +50,31 @@
         $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
         addDetailForm($collectionHolder, $newLinkLi);
-
-
-        //if tarif réduit checked $('.prixIndCalcul').html('10€')
-
+        
+        //Calcul du prix total lors de la validation du formulaire
+        $('#global_valider').click(function(){
+            var prixTotal = 0;
+            for (l=0; l < commandeNbBillets; l++){
+            inputPrixInd = $('.global_details_' + l + '_visitorAge').html();
+                if (inputPrixInd == "0,00 €"){
+                    prixInd=0;
+                } else if (inputPrixInd == "8,00 €") {    
+                    prixInd = 8;
+                } else if (inputPrixInd == "16,00 €") {
+                    prixInd = 16;
+                } else if (inputPrixInd == "12,00 €") {
+                    prixInd = 12;  
+                } else if (inputPrixInd == "10,00 €") {
+                    prixInd = 10; 
+                }
+            prixTotal += prixInd;
+                console.log(prixInd);
+            $('#global_commandePrixTotal').val(prixTotal);
+            $('.prixTotal').html(prixTotal+ ",00 €"); 
+            }
+        });
     });
+
 
     function addDetailForm($collectionHolder, $newLinkLi) {
         for (i = 0; i < commandeNbBillets; i++) {
@@ -68,7 +92,7 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li
-            var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'></span></div><div class='global_details_" + i + "_visitorReduc'></div>");
+            var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span type='text'  class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'></span></div><div class='global_details_" + i + "_visitorReduc'></div>");
             $newLinkLi.before($newFormLi);
 
 
@@ -106,42 +130,33 @@
                     if (commandeDateMonth < birthMonth || commandeDateMonth == birthMonth && commandeDateDay < birthDay) {
                         age--;
                     };
-                    
                     //Calcul du prix selon l'âge
                     if (age < 4) {
                         $('.' + j).html('0,00 €');
-                        var prixInd = 0;
                     } else if (age >= 4 && age < 12) {
                         $('.' + j).html('8,00 €');
-                        var prixInd = 8;
                     } else if (age >= 12 && age < 60) {
                         $('.' + j).html('16,00 €');
-                        var prixInd = 16;
                     } else if (age >= 60) {
-                        $('.' + j).html('12,00 €');
-                        var prixInd = 12;
+                        $('.' + j).html('12,00 €'); 
                     };
-
-                    prixAvantReduc = $('.' + j).html();
-                    console.log(prixAvantReduc);
+                    
+                    prixAvantReduc = $('.' + j).html();  
                 },
-
             });
-
+                
             //Application du tarif réduit
             caseCoche = $('#global_details_' + i + '_visitorReduc');
             caseCoche.change(function() {
                 var k = this.id;
-
                 if (this.checked) {
                     $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite');
-                    $('span.' + k).html('10,00 €');
+                    $('span.' + k).html('10,00 €'); 
                 } else {
                     $('div.' + k).empty();
                     $('span.' + k).html(prixAvantReduc);
                 };
-            });
-
+            });   
         }
     };
 
