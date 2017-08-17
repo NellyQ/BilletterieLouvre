@@ -1,5 +1,5 @@
 //STRIPE
-var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+var stripe = Stripe('pk_test_G0WPeLNB9kIYOIeYcOjweQv9');
 var elements = stripe.elements();
 
 var card = elements.create('card', {
@@ -42,12 +42,12 @@ card.on('change', function(event) {
 });
 
 document.querySelector('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var form = document.querySelector('form');
-  var extraDetails = {
-    name: form.querySelector('input[name=cardholder-name]').value,
-  };
-  stripe.createToken(card, extraDetails).then(setOutcome);
+    e.preventDefault();
+    var form = document.querySelector('form');
+    var extraDetails = {
+        name: form.querySelector('input[name=cardholder-name]').value,
+    };
+    stripe.createToken(card, extraDetails).then(setOutcome);
 });
 
 function stripeTokenHandler(token) {

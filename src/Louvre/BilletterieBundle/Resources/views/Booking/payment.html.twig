@@ -4,8 +4,10 @@
 
 {% block stylesheets %}
     
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="{{ asset('js/stripe.js') }}"></script>
+    
     {{ parent() }}
 
 {% endblock %}
@@ -34,20 +36,20 @@
       <div class="group">
         <label>
           <span>Nom</span>
-          <input name="cardholder-name" class="field" placeholder="Jane Doe" />
+          <input name="cardholder-name" class="field" placeholder="Jane Doe" required />
         </label>
         <label>
           <span>Email</span>
-          <input class="field" placeholder="abc@mail.com" type="mail" />
+          <input class="field" placeholder="abc@mail.com" type="mail" required />
         </label>
       </div>
       <div class="group">
-        <label>
-          <span>Card</span>
-          <div id="card-element" class="field"></div>
-        </label>
-      </div>
-      <button type="submit" value = {{commande.commandePrixTotal}}>{{commande.commandePrixTotal}}</button>
+          <label>
+        <span>Card</span>
+        <div id="card-element" class="field"></div>
+          </label>
+        </div>
+      <button type="submit" value = {{commande.commandePrixTotal}}>Payer {{commande.commandePrixTotal}} € </button>
       <div class="outcome">
         <div class="error" role="alert"></div>
         <div class="success">
@@ -57,7 +59,7 @@
     </form>
 
 
-
+<script src="{{ asset('js/stripe.js') }}"></script>
 
 
 {% endblock %}

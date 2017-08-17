@@ -80,13 +80,16 @@ class BookingController extends Controller
                         'label' => "Valider la commande"));
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em = $this->getDoctrine()->getManager();
             
-        $session->set('commande', $commande);
-        /*$em = $this->getDoctrine()->getManager();
-        $em->persist($detail);
-        $em->flush();*/
-
-      $request->getSession()->getFlashBag()->add('notice', 'renseignements bien enregistrée.');
+        $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+        $commandePrixTotal = $request->get('commandePrixTotal');
+        $commande->setCommandePrixTotal($commandePrixTotal);
+        
+        //$em->persist($detail);
+        
+        $em->persist($commande);
+        $em->flush();
 
       return $this->redirectToRoute('louvre_billetterie_payment');
         }
@@ -105,6 +108,10 @@ class BookingController extends Controller
         $commandeId = $commande->getCommandeId();
         $commandePrixTotal = $commande->getCommandePrixTotal();
         
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+      return $this->redirectToRoute('louvre_billetterie_confirmation');
+        }
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
           'commande' => $commande,

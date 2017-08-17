@@ -9,3 +9,7 @@ louvre_billetterie_details:
 louvre_billetterie_payment:
     path:     /payment
     defaults: { _controller: LouvreBilletterieBundle:Booking:payment }
+    
+louvre_billetterie_confirmation:
+    path:     /confirmation
+    defaults: { _controller: LouvreBilletterieBundle:Booking:confirmation }

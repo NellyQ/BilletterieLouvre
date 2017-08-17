@@ -17,8 +17,8 @@ class Commande
     /**
      * @var int
      *
-     * @ORM\Column(name="commande_id", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="commande_id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $commandeId;
@@ -54,11 +54,7 @@ class Commande
      * @var int
      *
      * @ORM\Column(name="commande_prixTotal", type="integer")
-     * @Assert\Range(
-     *     min = 1,
-     *     max = 20,
-     *     minMessage="Veuillez choisir un nombre de billet compris entre 1 et 20",
-     *     maxMessage="Veuillez choisir un nombre de billet compris entre 1 et 20")
+     * 
      */
     private $commandePrixTotal;
 
