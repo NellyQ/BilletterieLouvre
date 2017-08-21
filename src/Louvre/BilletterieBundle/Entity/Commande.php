@@ -53,7 +53,7 @@ class Commande
     /**
      * @var int
      *
-     * @ORM\Column(name="commande_prixTotal", type="integer")
+     * @ORM\Column(name="commande_prixTotal", type="integer", nullable=true)
      * 
      */
     private $commandePrixTotal;

@@ -22,13 +22,7 @@ class Detail
      */
     private $id;
     
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="commande_id", type="integer")
-     */
-    private $commandeId;
-
+    
     /**
      * @var string
      *
@@ -58,13 +52,6 @@ class Detail
     private $visitorCountry;
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="prix_billet", type="int", length=255)
-     */
-    private $prixBillet;
-    
-    /**
      * @var bool
      *
      * @ORM\Column(name="visitor_reduc", type="boolean")
@@ -73,6 +60,7 @@ class Detail
     
     /**
      * @ORM\ManyToOne(targetEntity="Commande", inversedBy="details")
+     * @ORM\JoinColumn(name="id", referencedColumnName="commande_id", nullable=false)
      */
     private $commande;
     

@@ -16,6 +16,7 @@ use Louvre\BilletterieBundle\Form\GlobalType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class BookingController extends Controller
 {
@@ -79,21 +80,29 @@ class BookingController extends Controller
         $form -> add('valider', SubmitType::class, array(
                         'label' => "Valider la commande"));
         
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-            
+        $em = $this->getDoctrine()->getManager();    
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
-        $commandePrixTotal = $request->get('commandePrixTotal');
-        $commande->setCommandePrixTotal($commandePrixTotal);
+        //$details = new ArrayCollection();
         
-        //$em->persist($detail);
-        
-        $em->persist($commande);
-        $em->flush();
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            
+            $commandePrixTotal = $form->get('commandePrixTotal')->getData();
+            
+            $commande->setCommandePrixTotal($commandePrixTotal);
+          
+            $details = $form->get('details')->getData(); 
 
-      return $this->redirectToRoute('louvre_billetterie_payment');
+            foreach ($details as $detail){
+                $details->add($detail);
+                $em->persist($detail);
+            }
+       
+            $em->persist($commande);
+            $em->flush();
+
+        return $this->redirectToRoute('louvre_billetterie_payment');
         }
-
+        
     return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
         'form' => $form->createView(),
         'commande'=> $commande,

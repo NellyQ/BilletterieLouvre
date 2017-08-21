@@ -51,8 +51,8 @@
 
         addDetailForm($collectionHolder, $newLinkLi);
         
-        //Calcul du prix total lors de la validation du formulaire
-        $('#global_valider').click(function(){
+        //recalcul du prix total si modification du formulaire
+        $("input[name^='global']").change(function(){
             var prixTotal = 0;
             for (l=0; l < commandeNbBillets; l++){
             inputPrixInd = $('.global_details_' + l + '_visitorAge').html();
@@ -68,8 +68,9 @@
                     prixInd = 10; 
                 }
             prixTotal += prixInd;
-                console.log(prixInd);
+                
             $('#global_commandePrixTotal').val(prixTotal);
+            $('#global_commandePrixTotal').html(prixTotal);
             $('.prixTotal').html(prixTotal+ ",00 €"); 
             }
         });
@@ -130,7 +131,7 @@
                     if (commandeDateMonth < birthMonth || commandeDateMonth == birthMonth && commandeDateDay < birthDay) {
                         age--;
                     };
-                    //Calcul du prix selon l'âge
+                    //Calcul du prix individuel selon l'âge
                     if (age < 4) {
                         $('.' + j).html('0,00 €');
                     } else if (age >= 4 && age < 12) {
@@ -141,7 +142,30 @@
                         $('.' + j).html('12,00 €'); 
                     };
                     
-                    prixAvantReduc = $('.' + j).html();  
+                    prixAvantReduc = $('.' + j).html();
+                    
+                    //Calcul du prix total
+                    var prixTotal = 0;
+                    for (l=0; l < commandeNbBillets; l++){
+                        inputPrixInd = $('.global_details_' + l + '_visitorAge').html();
+                            if (inputPrixInd == "0,00 €"){
+                                prixInd=0;
+                            } else if (inputPrixInd == "8,00 €") {    
+                                prixInd = 8;
+                            } else if (inputPrixInd == "16,00 €") {
+                                prixInd = 16;
+                            } else if (inputPrixInd == "12,00 €") {
+                                prixInd = 12;  
+                            } else if (inputPrixInd == "10,00 €") {
+                                prixInd = 10; 
+                            }
+                            
+                        prixTotal += prixInd;
+                
+                        $('#global_commandePrixTotal').val(prixTotal);
+                        $('#global_commandePrixTotal').html(prixTotal);
+                        $('.prixTotal').html(prixTotal+ ",00 €"); 
+                    }
                 },
             });
                 
