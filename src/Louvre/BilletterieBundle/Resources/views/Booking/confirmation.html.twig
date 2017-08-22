@@ -1,18 +1,18 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} {% block stylesheets %}
+{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} 
 
 {% block body %}
-<nav class="navbar navbar-default">
-    <nav aria-label="Page navigation">
-        <ul class="pager">
-            <li class="disabled"><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="disabled"><a href="#">Renseignements visiteur(s)</a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="disabled"><a href="#">Paiement</a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="active"><a href="#">Confirmation</a></li>
-        </ul>
-    </nav>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
+      <li class="active"><a href="#">2 - Renseignements visiteur(s) <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+      <li class="active"><a href="#">3 - Paiement <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+      <li class="active"><a href="#">4 - Confirmation</a></li>
+    </ul>
+  </div>
 </nav>
 
 {% endblock %}

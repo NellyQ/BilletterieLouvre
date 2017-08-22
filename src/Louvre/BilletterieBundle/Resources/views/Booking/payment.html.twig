@@ -17,22 +17,21 @@
 {% endblock %}
 
 {% block body %}
-    <nav class="navbar navbar-default">
-        <nav aria-label="Page navigation">
-            <ul class="pager">
-                <li class="disabled" ><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="disabled"><a href="#">Renseignements visiteur(s)<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="active"><a href="#">Paiement</a></li>
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <li class="disabled"><a href="#">Confirmation</a></li>
-            </ul>
-        </nav><!-- /.container -->
-    </nav>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
+      <li class="active"><a href="#">2 - Renseignements visiteur(s) <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+      <li class="active"><a href="#">3 - Paiement</a></li>
+      <li class="disabled"><a href="#">4 - Confirmation</a></li>
+    </ul>
+  </div>
+</nav>
 
-
-    <form id="stripe">
+    <form method="post" id="stripe">
       <div class="group">
         <label>
           <span>Nom</span>
@@ -40,16 +39,17 @@
         </label>
         <label>
           <span>Email</span>
-          <input class="field" placeholder="abc@mail.com" type="mail" required />
+          <input name="cardholder-mail" class="field" placeholder="abc@mail.com" type="email" required />
         </label>
       </div>
       <div class="group">
           <label>
-        <span>Card</span>
+        <span>Carte</span>
         <div id="card-element" class="field"></div>
           </label>
         </div>
-      <button type="submit" value = {{commande.commandePrixTotal}}>Payer {{commande.commandePrixTotal}} € </button>
+        <input class="token" name="stripeToken" class="field"/>
+      <input id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € "></input>
       <div class="outcome">
         <div class="error" role="alert"></div>
         <div class="success">

@@ -13,6 +13,7 @@ use Louvre\BilletterieBundle\Form\CommandeType;
 use Louvre\BilletterieBundle\Entity\Detail;
 use Louvre\BilletterieBundle\Form\DetailType;
 use Louvre\BilletterieBundle\Form\GlobalType;
+use Louvre\BilletterieBundle\Form\StripeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,10 +37,14 @@ class BookingController extends Controller
         //On sérialise les données
         $jsonTotalBillets = $serializer->serialize($arrayTotalBillets, 'json');
         
+        //Ouverture de la session
         $session = $request->getSession();
-        $commande = new Commande();
-        $form = $this->get('form.factory')->create(CommandeType::class, $commande);
         
+        //Création d'une nouvelle commande
+        $commande = new Commande();
+        
+        //Création du formulaire commande
+        $form = $this->get('form.factory')->create(CommandeType::class, $commande);
         
         //Enregistrement des données dans la bdd si le formulaire est valide et renvoi vers la page details
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -57,7 +62,7 @@ class BookingController extends Controller
         'jsonTotalBillets' => $jsonTotalBillets,
     ));
   }
-    
+
     public function detailsAction(Request $request)
     {
         $session = $request->getSession();
@@ -65,12 +70,13 @@ class BookingController extends Controller
         $commandeId = $commande->getCommandeId();
         $commandeNbBillet = $commande->getCommandeNbBillet();
         
-        //Récupération et sérialization de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
+        //Récupération et sérialisation de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new DateTimeNormalizer('d-m-Y'));
 
         $serializer = new Serializer($normalizers, $encoders);
         $commandeDate = $commande->getCommandeDate();
+        
         //On sérialise les données
         $jsonCommandeDate = $serializer->serialize($commandeDate, 'json');
         
@@ -82,22 +88,23 @@ class BookingController extends Controller
         
         $em = $this->getDoctrine()->getManager();    
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
-        //$details = new ArrayCollection();
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             
+            //Enregistrement du prix total de la commande
             $commandePrixTotal = $form->get('commandePrixTotal')->getData();
-            
             $commande->setCommandePrixTotal($commandePrixTotal);
-          
+            $em->persist($commande);
+            
+            //Enregistrement des détails des visiteurs
             $details = $form->get('details')->getData(); 
-
             foreach ($details as $detail){
                 $details->add($detail);
+                $detail->setCommandeId($commandeId);
                 $em->persist($detail);
             }
        
-            $em->persist($commande);
+            //Mise à jour de la bdd
             $em->flush();
 
         return $this->redirectToRoute('louvre_billetterie_payment');
@@ -116,10 +123,24 @@ class BookingController extends Controller
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
         $commandePrixTotal = $commande->getCommandePrixTotal();
-        
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                
+        if ($request->isMethod('POST')) {
+            
+            \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
 
-      return $this->redirectToRoute('louvre_billetterie_confirmation');
+            // Get the credit card details submitted by the form
+            $token = $_POST['stripeToken'];
+
+            // Create a charge: this will charge the user's card
+            $charge = \Stripe\Charge::create(array(
+                "amount" => $commandePrixTotal*100, // Amount in cents
+                "currency" => "eur",
+                "source" => $token,
+                "description" => "Paiement Stripe"
+                ));
+
+            $this->addFlash("success","Le paiement est accepté !");
+            return $this->redirectToRoute('louvre_billetterie_confirmation');
         }
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
@@ -127,6 +148,11 @@ class BookingController extends Controller
           'commandePrixTotal' => $commandePrixTotal,
           'commandeId' => $commandeId,
       ));
+    }
+    
+    public function confirmationAction(Request $request)
+    {
+        return $this->render('LouvreBilletterieBundle:Booking:confirmation.html.twig');
     }
 
 }

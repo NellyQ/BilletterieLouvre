@@ -27,6 +27,9 @@ class GlobalType extends AbstractType
             
             ->add('commandePrixTotal', IntegerType::class, array(
                 'label' => " ",
+                'attr' => array (
+                    'readonly' => true,
+                ),
                 'required' => true));
     }
     

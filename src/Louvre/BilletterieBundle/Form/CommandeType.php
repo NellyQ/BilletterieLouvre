@@ -23,7 +23,7 @@ class CommandeType extends AbstractType
     {
         $builder
             ->add('commandeDate', DateType::class, array(
-                'label' => 'Choisissez la date de votre visite',
+                'label' => 'Date de votre visite',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
@@ -31,13 +31,13 @@ class CommandeType extends AbstractType
                 ]
             ))
             ->add('commandeTypeBillet', ChoiceType::class, array(
-                'label' => 'Choisissez le type de billet',
+                'label' => 'Type de billet',
                 'choices' => array('Journée' => 'Journee', 'Demi-journée' => 'Demi-journee'),
                 'multiple'  => false,
                 'expanded'  => true,)
             )
             ->add('commandeNbBillet', IntegerType::class, array(
-                'label' => 'Choisissez le nombre de billet',
+                'label' => 'Nombre de billet',
                 'data' => 1,
                 'attr' => array('min'=> 1, 'max' => 10),)
                   

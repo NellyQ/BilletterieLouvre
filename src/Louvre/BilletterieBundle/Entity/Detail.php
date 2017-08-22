@@ -22,6 +22,12 @@ class Detail
      */
     private $id;
     
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="commande_id", type="integer")
+     */
+     private $commandeId;
     
     /**
      * @var string

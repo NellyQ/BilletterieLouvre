@@ -1,30 +1,40 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} {% block stylesheets %}
+{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} 
+
+{% block stylesheets %}
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('js/datepicker-fr.js') }}"></script>
-{{ parent() }} {% endblock %} {% block title %} {{ parent() }} - Renseignements {% endblock %} {% block body %}
-<nav class="navbar navbar-default">
-    <nav aria-label="Page navigation">
-        <ul class="pager">
-            <li class="disabled"><a href="#">Sélection date, type et nombre de billet <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="active"><a href="#">Renseignements visiteur(s)</a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="disabled"><a href="#">Paiement</a></li>
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <li class="disabled"><a href="#">Confirmation</a></li>
-        </ul>
-    </nav>
+{{ parent() }} 
+
+{% endblock %} 
+
+{% block title %} 
+{{ parent() }} - Renseignements 
+{% endblock %} 
+
+{% block body %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
+      <li class="active"><a href="#">2 - Renseignements visiteur(s)</a></li>
+      <li class="disabled"><a href="#">3 - Paiement</a></li>
+      <li class="disabled"><a href="#">4 - Confirmation</a></li>
+    </ul>
+  </div>
 </nav>
 
 <form method="post">
-    <div class="col-xs-8 col-xs-offset-2 well">
+    <div class="col-xs-10 col-xs-offset-1 well">
         {{ form_start(form) }} {{ form_errors(form) }}
         <ul class="details" data-prototype="{{form_widget(form.details.vars.prototype)|e('html_attr')}}">
         </ul>
-        <div class='prixBilletInd'> Prix Total : <span type='text'  class='prixTotal'></span></div>
+        <div id='prixTotal'> Prix Total : <span type='text'  class='prixTotal'></span></div>
         {{ form_row(form.commandePrixTotal) }}
         {{ form_row(form.valider) }} 
         {{ form_rest(form) }}
@@ -174,7 +184,7 @@
             caseCoche.change(function() {
                 var k = this.id;
                 if (this.checked) {
-                    $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite');
+                    $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite.');
                     $('span.' + k).html('10,00 €'); 
                 } else {
                     $('div.' + k).empty();

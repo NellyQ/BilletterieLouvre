@@ -1,6 +1,7 @@
 //STRIPE
 var stripe = Stripe('pk_test_G0WPeLNB9kIYOIeYcOjweQv9');
 var elements = stripe.elements();
+var commandePrixTotal = '{{commande.commandePrixTotal}}';
 
 var card = elements.create('card', {
   style: {
@@ -27,10 +28,10 @@ function setOutcome(result) {
   errorElement.classList.remove('visible');
 
   if (result.token) {
-    // Use the token to create a charge or a customer
-    // https://stripe.com/docs/charges
+    document.querySelector('.token').value = result.token.id;
     successElement.querySelector('.token').textContent = result.token.id;
     successElement.classList.add('visible');
+    
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
@@ -44,21 +45,13 @@ card.on('change', function(event) {
 document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = document.querySelector('form');
-    var extraDetails = {
-        name: form.querySelector('input[name=cardholder-name]').value,
-    };
-    stripe.createToken(card, extraDetails).then(setOutcome);
+    var name = form.querySelector('input[name=cardholder-name]').value;
+    var mail = form.querySelector('input[name=cardholder-mail]').value;
+    
+    
+    stripe.createToken(card).then(setOutcome);
+
+// Submit the form
+  form.submit();
 });
 
-function stripeTokenHandler(token) {
-  // Insert the token ID into the form so it gets submitted to the server
-  var form = document.getElementById('payment-form');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
-
-  // Submit the form
-  form.submit();
-}

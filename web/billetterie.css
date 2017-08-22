@@ -5,22 +5,24 @@ body {
 }
 
 #titrePage{
-    color : rgb(34,34,34);
+    color : color: #222;
     font-family: serif;
     font-size: 2em;
-    margin-left : 20%;
-}
-
-#page-header{
-    
-    display: flex;
-    align-items: center;
-    padding: 5px;
+    text-align: center;
     margin-bottom: 10px;
 }
 
-.well {
-    margin-bottom: 70px;
+.navbar-brand {
+  margin-left: -30px;
+  margin-top: -14px;
+}
+
+.navbar-inverse .navbar-nav > .disabled > a {
+  color: #605f5f;
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+  color: #c9c9c9;
 }
 
 .active a{
@@ -64,10 +66,68 @@ td.indispo.ui-state-disabled span {
   color : black;
 }
 
+/*Légende*/
+.flexboxlegende {
+  display: flex;
+  flex-wrap : wrap;
+  justify-content : center;
+  max-width : 550px;
+}
+
+#legende {
+  margin : auto;
+}
+
+div.bloclegende {
+  display: flex;
+  padding: 3px; 
+}
+
+div.colordispo {
+ background-color: palegreen;
+ width : 20px;
+ height : 20px; 
+ margin-right: 5px;
+}
+
+div.colorlimit {
+ background-color: orange;
+ width : 20px;
+ height : 20px;
+ margin-right: 5px; 
+}
+
+div.colorindispo {
+ background-color: red;
+ opacity : 0.35;
+ width : 20px;
+ height : 20px; 
+ margin-right: 5px;
+}
+
+#formCommande{
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+#formCommande div.form-group{
+  width : 550px;
+  margin : auto;
+}
+
+
 /*Details*/
+ul.details {
+  margin-left : 10px;
+}
+
 ul.details li {
   margin-bottom : 20px;
-  list-style-type : none;
+  list-style-type: none;
+}
+
+.well {
+    margin-bottom: 70px;
+    padding : 0px;
 }
 
 h2 {
@@ -75,18 +135,44 @@ h2 {
   text-decoration : underline; 
 }
 
-.prixBilletInd {
-  font-size: 1.2em;
+div[id^="global_details_"]{
+  display : flex;
+  flex-wrap : wrap;
 }
 
-.prixBilletInd span {
+.form-group {
+    margin-bottom: 0px;
+    padding: 5px;
+}
+
+.prixBilletInd {
+  margin-top :10px;
+}
+
+div.checkbox {
+  width: 500px;
+}
+#prixTotal {
+  font-size: 1.2em;
+  float: right;
+  background-color: #e3e3e3;
+  padding : 2px;
+  width : 200px;
+
+}
+
+.prixTotal {
   font-size: 1em;
 }
 
-/*#global_commandePrixTotal {
+#global_commandePrixTotal {
   display : none;
-}*/
+}
 
+#global_valider {
+  float: right;
+  margin: 15px;
+}
 
 /*stripe*/* {
   font-family: "Helvetica Neue", Helvetica;
@@ -147,7 +233,7 @@ form#stripe .field::-webkit-input-placeholder { color: #CFD7E0; }
 form#stripe .field::-moz-placeholder { color: #CFD7E0; }
 form#stripe .field:-ms-input-placeholder { color: #CFD7E0; }
 
-form#stripe button {
+form#stripe input#valider {
   float: left;
   display: block;
   background: #666EE8;
