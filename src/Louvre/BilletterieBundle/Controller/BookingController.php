@@ -123,7 +123,9 @@ class BookingController extends Controller
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
         $commandePrixTotal = $commande->getCommandePrixTotal();
-                
+        $em = $this->getDoctrine()->getManager();    
+        $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+        
         if ($request->isMethod('POST')) {
             
             \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
@@ -138,8 +140,18 @@ class BookingController extends Controller
                 "source" => $token,
                 "description" => "Paiement Stripe"
                 ));
-
-            $this->addFlash("success","Le paiement est accepté !");
+            
+            //Mise à jour de la bdd avec le numéro de commande et le mail
+            $em = $this->getDoctrine()->getManager();
+            
+            $commande->setCommandeCode($token);
+            
+            $commandeMail = $_POST['cardholder-mail'];
+            $commande->setCommandeMail($commandeMail);
+            
+            $em->persist($commande);
+            $em->flush();
+            
             return $this->redirectToRoute('louvre_billetterie_confirmation');
         }
         
@@ -152,7 +164,21 @@ class BookingController extends Controller
     
     public function confirmationAction(Request $request)
     {
-        return $this->render('LouvreBilletterieBundle:Booking:confirmation.html.twig');
+        $session = $request->getSession();
+        $commande = $session->get('commande');
+        $commandeId = $commande->getCommandeId();
+        $em = $this->getDoctrine()->getManager();    
+        $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+        
+        $details = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('LouvreBilletterieBundle:Detail')
+                        ->findByCommandeId($commandeId);
+        
+        return $this->render('LouvreBilletterieBundle:Booking:confirmation.html.twig', array(
+            'commande' => $commande,
+            'details' => $details,
+            ));
     }
 
 }

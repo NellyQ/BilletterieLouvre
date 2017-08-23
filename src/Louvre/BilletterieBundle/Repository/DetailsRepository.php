@@ -10,4 +10,5 @@ namespace Louvre\BilletterieBundle\Repository;
  */
 class DetailsRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

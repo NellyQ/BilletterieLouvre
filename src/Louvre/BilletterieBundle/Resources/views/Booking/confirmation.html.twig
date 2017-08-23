@@ -1,10 +1,20 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} 
+{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} 
+
+{% extends "::base.html.twig" %} 
+
+{% block stylesheets %}
+    
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    
+    {{ parent() }}
+
+{% endblock %}
 
 {% block body %}
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
+      <a class="navbar-brand" href=""><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
@@ -14,5 +24,52 @@
     </ul>
   </div>
 </nav>
+
+<div class="container-fluid col-xs-10 col-xs-offset-1">
+
+    <h3>Récapitulatif de votre commande</h3>
+
+    <p>Numéro de commande : {{commande.commandeCode}}</p>
+    <p>Date de la visite : {{commande.commandeDate | date("d-m-Y")}}</p>
+    
+    <p>Type de billet : {{commande.commandeTypeBillet}}</p>
+
+    <p>Nombre de billet : {{commande.commandeNbBillet}}</p>
+    
+    <p>Email : {{commande.commandeMail}}</p>
+    
+    <div>Informations visiteurs :
+ 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date de naissance</th>
+                    <th>Pays</th>
+                    <th>Réduction</th>
+                </tr>
+            </thead>
+              <tbody>
+                  {% for detail in details %}
+                    <tr>
+                        <td>{{detail.visitorName}}</td>
+                        <td>{{detail.visitorFirstname}}</td>
+                        <td>{{detail.visitorAge | date("d-m-Y")}}</td>
+                        <td>{{detail.visitorCountry}}</td>
+                        <td>{{detail.visitorReduc}}</td>
+                    </tr>
+                  {% endfor %}
+              </tbody>
+        </table>
+    </div>
+    
+    <p>Prix Total : {{commande.commandePrixTotal}} €</p>
+    
+    <p>Vous allez reçevoir vos billets par mail à l'adresse indiquée précédement.</p>
+
+    <div id="remerciement">Merci de votre commande et à bientôt sur le site du Louvre</div>
+    
+</div>
 
 {% endblock %}

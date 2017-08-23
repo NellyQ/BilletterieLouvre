@@ -39,9 +39,9 @@ class Detail
     /**
      * @var string
      *
-     * @ORM\Column(name="visitor_fisrtname", type="string", length=255)
+     * @ORM\Column(name="visitor_firstname", type="string", length=255)
      */
-    private $visitorFisrtname;
+    private $visitorFirstname;
 
     /**
      * @var int
@@ -129,27 +129,27 @@ class Detail
     }
 
     /**
-     * Set visitorFisrtname
+     * Set visitorFirstname
      *
-     * @param string $visitorFisrtname
+     * @param string $visitorFirstname
      *
      * @return Detail
      */
-    public function setVisitorFisrtname($visitorFisrtname)
+    public function setVisitorFirstname($visitorFirstname)
     {
-        $this->visitorFisrtname = $visitorFisrtname;
+        $this->visitorFirstname = $visitorFirstname;
 
         return $this;
     }
 
     /**
-     * Get visitorFisrtname
+     * Get visitorFirstname
      *
      * @return string
      */
-    public function getVisitorFisrtname()
+    public function getVisitorFirstname()
     {
-        return $this->visitorFisrtname;
+        return $this->visitorFirstname;
     }
 
     /**

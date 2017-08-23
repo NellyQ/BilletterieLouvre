@@ -233,7 +233,7 @@ form#stripe .field::-webkit-input-placeholder { color: #CFD7E0; }
 form#stripe .field::-moz-placeholder { color: #CFD7E0; }
 form#stripe .field:-ms-input-placeholder { color: #CFD7E0; }
 
-form#stripe input#valider {
+form#stripe button#valider {
   float: left;
   display: block;
   background: #666EE8;
@@ -280,6 +280,10 @@ form#stripe .outcome {
   color: #E4584C;
 }
 
+input.token{
+border:none;
+background-color:transparent;
+}
 .success {
   color: #666EE8;
 }
@@ -287,4 +291,17 @@ form#stripe .outcome {
 .success .token {
   font-weight: 500;
   font-size: 13px;
+}
+
+/*Confirmation*/
+h3 {
+  font-size: 1.4em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#remerciement {
+    text-align: center;
+    margin-top: 30px;
+    font-weight: bold;
 }

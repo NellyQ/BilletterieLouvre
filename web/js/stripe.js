@@ -31,6 +31,9 @@ function setOutcome(result) {
     document.querySelector('.token').value = result.token.id;
     successElement.querySelector('.token').textContent = result.token.id;
     successElement.classList.add('visible');
+    // Submit the form
+    var form = document.querySelector('form');
+    form.submit();
     
   } else if (result.error) {
     errorElement.textContent = result.error.message;
@@ -44,14 +47,7 @@ card.on('change', function(event) {
 
 document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
-    var form = document.querySelector('form');
-    var name = form.querySelector('input[name=cardholder-name]').value;
-    var mail = form.querySelector('input[name=cardholder-mail]').value;
-    
-    
+       
     stripe.createToken(card).then(setOutcome);
-
-// Submit the form
-  form.submit();
 });
 

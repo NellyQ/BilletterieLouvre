@@ -24,7 +24,7 @@ class DetailType extends AbstractType
             ->add('visitorName', TextType::class, array(
                 'label' => 'Nom'))
             
-            ->add('visitorFisrtname', TextType::class, array(
+            ->add('visitorFirstname', TextType::class, array(
                 'label' => 'Prénom'))
             
             ->add('visitorAge', DateType::class, array(
