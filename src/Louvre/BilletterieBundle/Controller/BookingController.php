@@ -152,7 +152,30 @@ class BookingController extends Controller
             $em->persist($commande);
             $em->flush();
             
-            return $this->redirectToRoute('louvre_billetterie_confirmation');
+            $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+        
+            $details = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('LouvreBilletterieBundle:Detail')
+                        ->findByCommandeId($commandeId);
+            
+            //Envoi de l'email de confirmation
+            $message = (new \Swift_Message('Votre commande'))
+                ->setFrom(array('nelly.quesada19@gmail.com'=> "Billetterie du Louvre"))
+                ->setTo($commandeMail)
+                ->setBody(
+                    $this->renderView(
+                        // app/Resources/views/Booking/email.html.twig
+                        'LouvreBilletterieBundle:Booking:email.html.twig',array(
+                            'commande' => $commande,
+                            'details' => $details,
+                    )),
+                    'text/html'
+                );
+            
+            $this->get('mailer')->send($message);
+            
+            //return $this->redirectToRoute('louvre_billetterie_confirmation');
         }
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(

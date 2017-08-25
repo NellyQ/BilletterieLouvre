@@ -48,11 +48,13 @@
 
     var $collectionHolder;
 
-    // setup an "add a tag" link
-    var $newLinkLi = $('<li></li>').append();
+    
 
     $(document).ready(function() {
 
+        // setup an "add a tag" link
+        var $newLinkLi = $('<li></li>').append();
+        
         $collectionHolder = $('ul.details');
 
         $collectionHolder.append($newLinkLi);

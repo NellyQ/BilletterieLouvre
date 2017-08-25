@@ -1,14 +1,20 @@
-
-
 //Tableau contenant les dates de commandes et le total de billet vendu par jour
 var totalBillets = JSON.parse(json_totalBillets);
+var now = new Date();
+var nowyears = now.getFullYear();
+var nowmonth = now.getMonth()+1;
+var nowday = now.getDate();
+var nowFormat = nowday + "-" + nowmonth + "-" + nowyears;
+var heure = now.getHours();
 
+    
 $.datepicker.setDefaults($.datepicker.regional['fr']);
 
 $(".datepicker").datepicker({
-    dateFormat: 'dd-mm-yy',
+    dateFormat: 'd-m-yy',
     minDate : 0,
     maxDate : "+1Y",
+    defaultDate:"+1d" ,
     showOtherMonths: true,
     selectOtherMonths: true,
     beforeShowDay: 
@@ -24,7 +30,6 @@ $(".datepicker").datepicker({
             
             //Dates affichées sur le calendrier au format dd-mm-yy
             var daysShown = $.datepicker.formatDate('dd-mm-yy',date);
-            
             
             
             //Boucle sur le tableau totalBillet pour comparer les dates affichées aux nombre de billets restants pour chaque date
@@ -60,8 +65,15 @@ $(".datepicker").datepicker({
                 $('#billetsRestants').html("Il reste " +billetsRestants+ " billet(s) disponible(s) pour cette date");
                 $('#commande_commandeNbBillet').attr('max', billetsRestants);
             }
-        
-    };
+        };
+
+        //Desactivation du bouton radio Journee si date selectionnée = aujourd'hui et heure > 14h00
+        if (date == nowFormat){
+            $('input[value="Journee"]').attr('disabled',"disabled");
+            $('input[value="Demi-journee"]').attr('checked',"checked");
+        } else {
+            $('input[value="Journee"]').removeAttr('disabled');
+        }        
     },
        
 });

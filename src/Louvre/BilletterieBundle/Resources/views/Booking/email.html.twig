@@ -1,42 +1,28 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/confirmation.html.twig #} 
+{# src/Louvre/Billetterie/Resources/views/Booking/email.html.twig #}
 
-{% extends "::base.html.twig" %} 
 
 {% block stylesheets %}
-    
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    
-    {{ parent() }}
 
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  
 {% endblock %}
 
+
+
 {% block body %}
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href=""><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
-      <li class="active"><a href="#">2 - Renseignements visiteur(s) <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-      <li class="active"><a href="#">3 - Paiement <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-      <li class="active"><a href="#">4 - Confirmation</a></li>
-    </ul>
-  </div>
-</nav>
 
 <div class="container-fluid col-xs-10 col-xs-offset-1">
 
-    <h3>Récapitulatif de votre commande</h3>
+    <h3>Votre commande</h3>
 
+   
+    
     <p>Numéro de commande : {{commande.commandeCode}}</p>
     <p>Date de la visite : {{commande.commandeDate | date("d-m-Y")}}</p>
     
     <p>Type de billet : {{commande.commandeTypeBillet}}</p>
 
     <p>Nombre de billet : {{commande.commandeNbBillet}}</p>
-    
-    <p>Email : {{commande.commandeMail}}</p>
     
     <div>Informations visiteurs :
  
@@ -66,9 +52,11 @@
     
     <p>PRIX TOTAL : {{commande.commandePrixTotal}} €</p>
     
-    <p>Vous allez reçevoir vos billets par mail à l'adresse indiquée précédement.</p>
+    <div>Pensez à imprimer cet email. Il fera office de billet le jour de votre visite</div>
+    
+    <div>N'oubliez pas vos pièces d'identités et justificatifs (en cas de tarif réduit) le jour de la visite.</div>
 
-    <div id="remerciement">Merci de votre commande et à bientôt sur le site du Louvre</div>
+    <div id="remerciement">Merci de votre commande et à bientôt</div>
     
 </div>
 
@@ -76,5 +64,6 @@
     $(".reduc:contains('1')").text("Oui");
     $(".reduc:contains('')").text("Non");
 </script>
+
 
 {% endblock %}
