@@ -300,6 +300,11 @@ h3 {
   margin-bottom: 20px;
 }
 
+#prix{
+  font-weight: bold;
+  text-align: right;
+  margin: 40px;
+}
 #remerciement {
     text-align: center;
     margin-top: 30px;

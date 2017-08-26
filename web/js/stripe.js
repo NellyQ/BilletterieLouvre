@@ -2,6 +2,7 @@
 var stripe = Stripe('pk_test_G0WPeLNB9kIYOIeYcOjweQv9');
 var elements = stripe.elements();
 var commandePrixTotal = '{{commande.commandePrixTotal}}';
+var commandeCode = '{{commande.commandeCode}}'
 
 var card = elements.create('card', {
   style: {
@@ -29,7 +30,7 @@ function setOutcome(result) {
 
   if (result.token) {
     document.querySelector('.token').value = result.token.id;
-    successElement.querySelector('.token').textContent = result.token.id;
+    
     successElement.classList.add('visible');
     // Submit the form
     var form = document.querySelector('form');

@@ -48,12 +48,12 @@
         <div id="card-element" class="field"></div>
           </label>
         </div>
-        
+        <input hidden class="token" name="stripeToken" class="field" readonly/>
       <button id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € ">Payer {{commande.commandePrixTotal}} €</button>
       <div class="outcome">
         <div class="error" role="alert"></div>
         <div class="success">
-          Paiment accepté! Votre numéro de commande est le <input class="token" name="stripeToken" class="field" readonly/>. Vous allez être redirigé automatiquement vers la page de confirmation.
+          Paiment accepté! Votre numéro de commande est le {{commande.commandeCode}}. Vous allez être redirigé automatiquement vers la page de confirmation.
         </div>
       </div>
     </form>

@@ -144,10 +144,13 @@ class BookingController extends Controller
             //Mise à jour de la bdd avec le numéro de commande et le mail
             $em = $this->getDoctrine()->getManager();
             
-            $commande->setCommandeCode($token);
-            
             $commandeMail = $_POST['cardholder-mail'];
             $commande->setCommandeMail($commandeMail);
+            
+            //Création du numéro de commande avec une clé unique de commande (id de la commande+mail)
+            $clécommande = $commandeId.$commandeMail;
+            $commandeCode = str_split(hash('md5', $clécommande),8)[0];
+            $commande->setCommandeCode($commandeCode);
             
             $em->persist($commande);
             $em->flush();
@@ -175,7 +178,7 @@ class BookingController extends Controller
             
             $this->get('mailer')->send($message);
             
-            //return $this->redirectToRoute('louvre_billetterie_confirmation');
+            return $this->redirectToRoute('louvre_billetterie_confirmation');
         }
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
