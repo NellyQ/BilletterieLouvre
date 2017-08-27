@@ -1,6 +1,14 @@
 var $collectionHolder;
+var prixDeBase = 16;
+var prices = [];
 
 $(document).ready(function () {
+    
+    for (i = 0; i < commandeNbBillets; i++) {
+        //Initialisation des prix avec le prix de base
+        prices.push( prixDeBase );
+    };
+    console.log(prices);
 
     // setup an "add a tag" link
     var $newLinkLi = $('<li></li>').append();
@@ -14,27 +22,9 @@ $(document).ready(function () {
     addDetailForm($collectionHolder, $newLinkLi);
 
     //recalcul du prix total si modification du formulaire
-    $("input[name^='global']").change(function () {
-        var prixTotal = 0;
-        for (l = 0; l < commandeNbBillets; l++) {
-            inputPrixInd = $('.global_details_' + l + '_visitorAge').html();
-            if (inputPrixInd == "0,00 €") {
-                prixInd = 0;
-            } else if (inputPrixInd == "8,00 €") {
-                prixInd = 8;
-            } else if (inputPrixInd == "16,00 €") {
-                prixInd = 16;
-            } else if (inputPrixInd == "12,00 €") {
-                prixInd = 12;
-            } else if (inputPrixInd == "10,00 €") {
-                prixInd = 10;
-            }
-            prixTotal += prixInd;
-
-            $('#global_commandePrixTotal').val(prixTotal);
-            $('#global_commandePrixTotal').html(prixTotal);
-            $('.prixTotal').html(prixTotal + ",00 €");
-        }
+    $("input[id^='global']").change(function () {
+        calculPrixTotal();
+        console.log(prixTotal);
     });
 });
 
@@ -55,15 +45,16 @@ function addDetailForm($collectionHolder, $newLinkLi) {
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li
-        var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span type='text'  class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'></span></div><div class='global_details_" + i + "_visitorReduc'></div>");
+        var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span type='text'  class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'>16,00 €</span></div><div class='global_details_" + i + "_visitorReduc'></div>");
         $newLinkLi.before($newFormLi);
-
-
+   
         //Affichage du datepicker
         $.datepicker.setDefaults({
             yearRange: 60,
             defaultDate: -365 * 20
         });
+        
+        $('#global_details_' + i + '_visitorAge').attr('numero',i);
 
         $('#global_details_' + i + '_visitorAge').datepicker({
             dateFormat: "dd-mm-yy",
@@ -93,55 +84,61 @@ function addDetailForm($collectionHolder, $newLinkLi) {
                 if (commandeDateMonth < birthMonth || commandeDateMonth == birthMonth && commandeDateDay < birthDay) {
                     age--;
                 };
+                
+                l = $('#' + j).attr("numero");
+                
                 //Calcul du prix individuel selon l'âge
                 if (age < 4) {
                     $('.' + j).html('0,00 €');
+                    prices[l] = 0;
                 } else if (age >= 4 && age < 12) {
                     $('.' + j).html('8,00 €');
+                    prices[l] = 8;
                 } else if (age >= 12 && age < 60) {
                     $('.' + j).html('16,00 €');
+                    prices[l] = 16;
                 } else if (age >= 60) {
                     $('.' + j).html('12,00 €');
+                    prices[l] = 12;
                 };
 
-                prixAvantReduc = $('.' + j).html();
-
+                prixAvantReduc = prices[l];
+                htmlAvantReduc = $('.' + j).html();
                 //Calcul du prix total
-                var prixTotal = 0;
-                for (l = 0; l < commandeNbBillets; l++) {
-                    inputPrixInd = $('.global_details_' + l + '_visitorAge').html();
-                    if (inputPrixInd == "0,00 €") {
-                        prixInd = 0;
-                    } else if (inputPrixInd == "8,00 €") {
-                        prixInd = 8;
-                    } else if (inputPrixInd == "16,00 €") {
-                        prixInd = 16;
-                    } else if (inputPrixInd == "12,00 €") {
-                        prixInd = 12;
-                    } else if (inputPrixInd == "10,00 €") {
-                        prixInd = 10;
-                    }
-
-                    prixTotal += prixInd;
-
-                    $('#global_commandePrixTotal').val(prixTotal);
-                    $('#global_commandePrixTotal').html(prixTotal);
-                    $('.prixTotal').html(prixTotal + ",00 €");
-                }
+                calculPrixTotal();
             },
         });
 
         //Application du tarif réduit
+        $('#global_details_' + i + '_visitorReduc').attr('numero',i);
         caseCoche = $('#global_details_' + i + '_visitorReduc');
         caseCoche.change(function () {
             var k = this.id;
+            l = $('#' + k).attr("numero");
             if (this.checked) {
                 $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite.');
                 $('span.' + k).html('10,00 €');
+                prices[l] = 10;
+                console.log(prices);
             } else {
                 $('div.' + k).empty();
-                $('span.' + k).html(prixAvantReduc);
+                $('span.' + k).html(htmlAvantReduc);
+                prices[l] = prixAvantReduc;
+                console.log(prices);
             };
         });
+        
     }
+    
+};
+
+function calculPrixTotal() {
+    var prixTotal = 0;
+        for (l = 0; l < commandeNbBillets; l++) {
+            prixTotal += prices[l];
+            
+            $('#global_commandePrixTotal').val(prixTotal);
+            $('#global_commandePrixTotal').html(prixTotal);
+            $('.prixTotal').html(prixTotal + ",00 €");
+        }
 };
