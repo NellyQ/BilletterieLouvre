@@ -43,7 +43,11 @@
                         <td>{{detail.visitorFirstname}}</td>
                         <td>{{detail.visitorAge | date("d-m-Y")}}</td>
                         <td>{{detail.visitorCountry}}</td>
-                        <td class='reduc'>{{detail.visitorReduc}}</td>
+                        {% if detail.visitorReduc == 1 %}
+                        <td class='reduc'>Oui</td>
+                        {% else %}
+                        <td class='reduc'>Non</td>
+                        {% endif %}
                     </tr>
                   {% endfor %}
               </tbody>
@@ -59,11 +63,5 @@
     <div id="remerciement">Merci de votre commande et à bientôt</div>
     
 </div>
-
-<script>
-    $(".reduc:contains('1')").text("Oui");
-    $(".reduc:contains('')").text("Non");
-</script>
-
 
 {% endblock %}

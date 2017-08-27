@@ -127,20 +127,7 @@ class BookingController extends Controller
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         
         if ($request->isMethod('POST')) {
-            
-            \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
-
-            // Get the credit card details submitted by the form
-            $token = $_POST['stripeToken'];
-
-            // Create a charge: this will charge the user's card
-            $charge = \Stripe\Charge::create(array(
-                "amount" => $commandePrixTotal*100, // Amount in cents
-                "currency" => "eur",
-                "source" => $token,
-                "description" => "Paiement Stripe"
-                ));
-            
+    
             //Mise à jour de la bdd avec le numéro de commande et le mail
             $em = $this->getDoctrine()->getManager();
             
@@ -154,6 +141,19 @@ class BookingController extends Controller
             
             $em->persist($commande);
             $em->flush();
+            
+            \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
+
+            // Get the credit card details submitted by the form
+            $token = $_POST['stripeToken'];
+
+            // Create a charge: this will charge the user's card
+            $charge = \Stripe\Charge::create(array(
+                "amount" => $commandePrixTotal*100, // Amount in cents
+                "currency" => "eur",
+                "source" => $token,
+                "description" => "Paiement Stripe"
+                ));
             
             $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         

@@ -20,7 +20,7 @@
       <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
       <li class="active"><a href="#">2 - Renseignements visiteur(s) <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
       <li class="active"><a href="#">3 - Paiement <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-      <li class="active"><a href="#">4 - Confirmation</a></li>
+      <li class="active"><a href="#">4 - Confirmation <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
     </ul>
   </div>
 </nav>
@@ -57,7 +57,11 @@
                         <td>{{detail.visitorFirstname}}</td>
                         <td>{{detail.visitorAge | date("d-m-Y")}}</td>
                         <td>{{detail.visitorCountry}}</td>
-                        <td class='reduc'>{{detail.visitorReduc}}</td>
+                        {% if detail.visitorReduc == 1 %}
+                        <td class='reduc'>Oui</td>
+                        {% else %}
+                        <td class='reduc'>Non</td>
+                        {% endif %}
                     </tr>
                   {% endfor %}
               </tbody>
@@ -72,9 +76,5 @@
     
 </div>
 
-<script>
-    $(".reduc:contains('1')").text("Oui");
-    $(".reduc:contains('')").text("Non");
-</script>
 
 {% endblock %}

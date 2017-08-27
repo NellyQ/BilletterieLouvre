@@ -30,7 +30,6 @@ function setOutcome(result) {
 
   if (result.token) {
     document.querySelector('.token').value = result.token.id;
-    
     successElement.classList.add('visible');
     // Submit the form
     var form = document.querySelector('form');
