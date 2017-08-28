@@ -1,0 +1,24 @@
+{# src/Louvre/Billetterie/Resources/views/Booking/tarifs.html.twig #} 
+
+{% extends "::base.html.twig" %} 
+
+{% block title %} {{ parent() }} - Tarifs {% endblock %}
+
+{% block body %}
+
+<div id="tarifs" class="container-fluid col-xs-10 col-xs-offset-1">
+<h2> Les tarifs visiteurs </h2>
+    <ul id="tarifsListe">
+    <li>Normal (à partir de 12 ans) : 16,00 €</li>
+    <li>Enfant (à partir de 4 ans et jusqu'à 12 ans): 8,00€</li>
+    <li>Senior (à partir de 60 ans) : 12,00 € </li>
+    <li>Réduit (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…) : 10,00 €</li> 
+    </ul>
+    
+    <p>Pour les enfants de moins de 4 ans l'entrée est gratuite.</p>
+    
+    <p id="defTarif">Le tarif visiteur est définit selon l'âge du visiteur à la date de la visite et non à la date de la commande. </p>
+</div>
+
+
+{% endblock %}

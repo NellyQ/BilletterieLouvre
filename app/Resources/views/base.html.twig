@@ -21,7 +21,20 @@
         <div id="page-header">
                 <div id="titrePage">BILLETTERIE EN LIGNE</div>
         </div>     
-    
+        
+        <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="{{ path('louvre_billetterie_commande')}}"><img src="{{ asset('images/logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li id="commande" class="active"><a> 1 - Commande </a></li>  
+                  <li id="renseignements" class="disabled"><a> 2 - Renseignements visiteur(s)</a></li>
+                  <li id="paiement" class="disabled"><a> 3 - Paiement</a></li>
+                  <li id="confirmation" class="disabled"><a> 4 - Confirmation </a></li>
+                </ul>
+              </div>
+        </nav>
     {% block body %}
     
     {% endblock %}
@@ -30,7 +43,7 @@
         
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container-fluid text-center">
-                <p><a href="" class="navbar-text" >Mentions Légales</a></p>
+                <p><a href="{{ path('louvre_billetterie_tarifs')}}">Tarifs</a> - <a href="{{ path('louvre_billetterie_mentions')}}">Mentions Légales</a> - <a href="mailto:nelly.quesada@orange.fr">Contact</a></p>
                 <p>Ce site, fictif, est réalisé dans le cadre d'une formation OpenClassrooms. Ceci n'est pas la billetterie officielle du Louvre</p>
             </div>
         </nav>

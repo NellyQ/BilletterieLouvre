@@ -1,4 +1,4 @@
-louvre_billetterie_order:
+louvre_billetterie_commande:
     path:     /
     defaults: { _controller: LouvreBilletterieBundle:Booking:commande }
 
@@ -13,3 +13,15 @@ louvre_billetterie_payment:
 louvre_billetterie_confirmation:
     path:     /confirmation
     defaults: { _controller: LouvreBilletterieBundle:Booking:confirmation }
+    
+louvre_billetterie_tarifs:
+    path:     /tarifs
+    defaults: { _controller: LouvreBilletterieBundle:Booking:tarifs }
+    
+louvre_billetterie_mentions:
+    path:     /mentions
+    defaults: { _controller: LouvreBilletterieBundle:Booking:mentions }
+
+louvre_billetterie_cgv:
+    path:     /cgv
+    defaults: { _controller: LouvreBilletterieBundle:Booking:cgv }

@@ -17,45 +17,37 @@
 {% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">1 - Commande <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>  
-      <li class="active"><a href="#">2 - Renseignements visiteur(s) <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
-      <li class="active"><a href="#">3 - Paiement</a></li>
-      <li class="disabled"><a href="#">4 - Confirmation</a></li>
-    </ul>
-  </div>
-</nav>
 
     <form method="post" id="stripe">
-      <div class="group">
-        <label>
-          <span>Nom</span>
-          <input name="cardholder-name" class="field" placeholder="Jane Doe" required />
-        </label>
-        <label>
-          <span>Email</span>
-          <input name="cardholder-mail" class="field" placeholder="abc@mail.com" type="email" required />
-        </label>
-      </div>
-      <div class="group">
-          <label>
-        <span>Carte</span>
-        <div id="card-element" class="field"></div>
-          </label>
+        <div class="container-fluid">
+            <div class="group">
+                <label> <span>Nom</span>
+                  <input name="cardholder-name" class="field" placeholder="Jane Doe" required />
+                </label>
+                <label> <span>Email</span>
+                  <input name="cardholder-mail" class="field" placeholder="abc@mail.com" type="email" required />
+                </label>
+            </div>
+
+            <div class="group">
+                <label> <span>Carte</span>
+                    <div id="card-element" class="field"></div>
+                </label>
+            </div>
+
+            <input type="checkbox" id="cgv" required> J'accepte les <a href="{{ path('louvre_billetterie_cgv')}}">conditions générales de ventes</a></input>
+
+            <input hidden class="token" name="stripeToken" class="field" readonly/>
+
+            <button id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € ">Payer {{commande.commandePrixTotal}} €</button>
+
+            <div class="outcome">
+                <div class="error" role="alert"></div>
+                <div class="success">
+                  Paiment accepté! Vous allez être redirigé automatiquement vers la page de confirmation.
+                </div>
+            </div>
         </div>
-        <input hidden class="token" name="stripeToken" class="field" readonly/>
-      <button id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € ">Payer {{commande.commandePrixTotal}} €</button>
-      <div class="outcome">
-        <div class="error" role="alert"></div>
-        <div class="success">
-          Paiment accepté! Vous allez être redirigé automatiquement vers la page de confirmation.
-        </div>
-      </div>
     </form>
 
 

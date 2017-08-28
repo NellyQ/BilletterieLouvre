@@ -183,8 +183,10 @@ div.checkbox {
 }
 
 form#stripe {
-  width: 480px;
+  width: 90%;
   margin: 20px auto;
+  max-width: 500px;
+  min-width: 300px;
 }
 
 form#stripe .group {
@@ -311,7 +313,27 @@ h3 {
     font-weight: bold;
 }
 
+/*tarifs*/
+#tarifs{
+  margin-top : 30px;
+}
+ul#tarifsListe{
+  margin-left: 30px;
+}
+
+#defTarif{
+  font-weight : bold;
+}
 /*footer*/
 footer p{
  color: #777;
 }
+
+footer a{
+ color: #777;
+}
+
+footer a:hover{
+ color: #c9c9c9;
+}
+

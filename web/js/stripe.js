@@ -1,3 +1,12 @@
+
+$('#renseignements').removeClass("disabled");
+$('#renseignements').addClass("active");
+$('#commande a').append(' <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>');
+$('#paiement').removeClass("disabled");
+$('#paiement').addClass("active");
+$('#renseignements a').append(' <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>');
+
+
 //STRIPE
 var stripe = Stripe('pk_test_G0WPeLNB9kIYOIeYcOjweQv9');
 var elements = stripe.elements();

@@ -1,80 +1,59 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/commande.html.twig #}
+{# src/Louvre/Billetterie/Resources/views/Booking/commande.html.twig #} 
 
-{% extends "::base.html.twig" %}
+{% extends "::base.html.twig" %} 
 
 {% block stylesheets %}
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{{ asset('js/datepicker-fr.js') }}"></script>
-    {{ parent() }}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/datepicker-fr.js') }}"></script>
 
-{% endblock %}
+{{ parent() }} 
 
-{% block title %}
-  {{ parent() }} - Réservation
-{% endblock %}
+{% endblock %} 
+
+{% block title %} {{ parent() }} - Réservation {% endblock %} 
 
 {% block body %}
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="{{ asset('logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">1 - Commande</a></li>
-        
-      <li class="disabled"><a href="#">2 - Renseignements visiteur(s)</a></li>
-      <li class="disabled"><a href="#">3 - Paiement</a></li>
-      <li class="disabled"><a href="#">4 - Confirmation</a></li>
-    </ul>
-  </div>
-</nav>
-
-    <form method="post">
-         <div class="col-xs-10 col-xs-offset-1 well">
-             <div id="formCommande">
-                    {{ form_start(form) }}
-                    {{ form_errors(form) }}
-                    <div class="form-group">
-                        {{ form_label(form.commandeDate) }}
-                        {{ form_widget(form.commandeDate) }}
-                        <div class="flexboxlegende">
-                            <div class="datepicker"></div>
-                            <div id="legende">
-                                <div class="bloclegende">
-                                    <div class="colordispo"></div>
-                                    <div>Places disponibles</div>
-                                </div>
-                                <div class="bloclegende">
-                                    <div class="colorlimit"></div>
-                                    <div>Places limitées</div>
-                                </div>
-                                <div class="bloclegende">
-                                    <div class="colorindispo"></div>
-                                    <div>Places indisponibles</div>
-                                </div>
-                            </div>
+<form method="post">
+    <div class="col-xs-10 col-xs-offset-1 well">
+        <div id="formCommande">
+            {{ form_start(form) }} {{ form_errors(form) }}
+            <div class="form-group">
+                {{ form_label(form.commandeDate) }} {{ form_widget(form.commandeDate) }}
+                <div class="flexboxlegende">
+                    <div class="datepicker"></div>
+                    <div id="legende">
+                        <div class="bloclegende">
+                            <div class="colordispo"></div>
+                            <div>Places disponibles</div>
                         </div>
-                        <div id="billetsRestants"></div>
-                        {{ form_errors(form.commandeDate) }}
+                        <div class="bloclegende">
+                            <div class="colorlimit"></div>
+                            <div>Places limitées</div>
+                        </div>
+                        <div class="bloclegende">
+                            <div class="colorindispo"></div>
+                            <div>Places indisponibles</div>
+                        </div>
                     </div>
-                    <span id="dispo"></span>
-                    {{ form_row(form.commandeTypeBillet) }}
-                    
-                    {{ form_rest(form) }}
-                    {{ form_end(form) }}
-                    
-                    <input id="confirmeCom" class="btn btn-default" type="submit" value= "Je confirme ma commande">
-                 </div>
-        </div>        
-    </form>   
+                </div>
+                <div id="billetsRestants"></div>
+                {{ form_errors(form.commandeDate) }}
+            </div>
+            <span id="dispo"></span> {{ form_row(form.commandeTypeBillet) }} {{ form_rest(form) }} {{ form_end(form) }}
+
+            <input id="confirmeCom" class="btn btn-default" type="submit" value="Je confirme ma commande">
+        </div>
+    </div>
+</form>
 </div>
 
 <script>
     var json_totalBillets = '{{jsonTotalBillets|raw}}';
+
 </script>
 
 <script src="{{ asset('js/billetterie.js') }}"></script>

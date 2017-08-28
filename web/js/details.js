@@ -4,6 +4,10 @@ var prices = [];
 
 $(document).ready(function () {
     
+    $('#renseignements').removeClass("disabled");
+    $('#renseignements').addClass("active");
+    $('#commande a').append(' <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>');
+    
     for (i = 0; i < commandeNbBillets; i++) {
         //Initialisation des prix avec le prix de base
         prices.push( prixDeBase );
@@ -126,8 +130,7 @@ function addDetailForm($collectionHolder, $newLinkLi) {
                 prices[l] = prixAvantReduc;
                 console.log(prices);
             };
-        });
-        
+        });      
     }
     
 };

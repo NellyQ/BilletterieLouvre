@@ -206,5 +206,22 @@ class BookingController extends Controller
             'details' => $details,
             ));
     }
+    
+     public function tarifsAction()
+        
+    {   
+         return $this->render('LouvreBilletterieBundle:Booking:tarifs.html.twig');
+    }
 
+    public function mentionsAction()
+        
+    {   
+         return $this->render('LouvreBilletterieBundle:Booking:mentions.html.twig');
+    }
+    
+    public function cgvAction()
+        
+    {   
+         return $this->render('LouvreBilletterieBundle:Booking:cgv.html.twig');
+    }
 }
