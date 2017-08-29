@@ -1,67 +1,63 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/email.html.twig #}
-
+{# src/Louvre/Billetterie/Resources/views/Booking/email.html.twig #} 
 
 {% block stylesheets %}
 
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-  
-{% endblock %}
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
 
-
+{% endblock %} 
 
 {% block body %}
 
 <div class="container-fluid col-xs-10 col-xs-offset-1">
 
-    <h3>Votre commande</h3>
+    <h3>{{ 'Votre commande'|trans }}</h3>
 
-   
-    
-    <p>Numéro de commande : {{commande.commandeCode}}</p>
-    <p>Date de la visite : {{commande.commandeDate | date("d-m-Y")}}</p>
-    
-    <p>Type de billet : {{commande.commandeTypeBillet}}</p>
+    <p>{{ 'Numéro de commande'|trans }} : {{commande.commandeCode}}</p>
+    <p>{{ 'Date de la visite'|trans }} : {{commande.commandeDate | date("d-m-Y")}}</p>
 
-    <p>Nombre de billet : {{commande.commandeNbBillet}}</p>
-    
-    <div>Informations visiteurs :
- 
+    <p>{{ 'Type de billet'|trans }} : {% if commande.commandeTypeBillet == "Journee" %} {{ 'Journée'|trans }} {% elseif commande.commandeTypeBillet == "Demi-journee" %} {{ 'Demi-journée (accès au musée à partir de 14h00)'|trans }} {% endif %}
+    </p>
+
+    <p>{{ 'Nombre de billet'|trans }} : {{commande.commandeNbBillet}}</p>
+
+     <div>{{ 'Informations visiteurs'|trans }} :
+
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Date de naissance</th>
-                    <th>Pays</th>
-                    <th>Réduction</th>
+                    <th>{{ 'Nom'|trans }}</th>
+                    <th>{{ 'Prénom'|trans }}</th>
+                    <th>{{ 'Date de naissance'|trans }}</th>
+                    <th>{{ 'Pays'|trans }}</th>
+                    <th>{{ 'Réduction'|trans }}</th>
                 </tr>
             </thead>
-              <tbody>
-                  {% for detail in details %}
-                    <tr>
-                        <td>{{detail.visitorName}}</td>
-                        <td>{{detail.visitorFirstname}}</td>
-                        <td>{{detail.visitorAge | date("d-m-Y")}}</td>
-                        <td>{{detail.visitorCountry}}</td>
-                        {% if detail.visitorReduc == 1 %}
-                        <td class='reduc'>Oui</td>
-                        {% else %}
-                        <td class='reduc'>Non</td>
-                        {% endif %}
-                    </tr>
-                  {% endfor %}
-              </tbody>
+            <tbody>
+                {% for detail in details %}
+                <tr>
+                    <td>{{detail.visitorName}}</td>
+                    <td>{{detail.visitorFirstname}}</td>
+                    <td>{{detail.visitorAge | date("d-m-Y")}}</td>
+                    <td>{{detail.visitorCountry}}</td>
+                    {% if detail.visitorReduc == 1 %}
+                    <td class='reduc'>{{ 'Oui'|trans }}</td>
+                    {% else %}
+                    <td class='reduc'>{{ 'Non'|trans }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
-    
-    <p>PRIX TOTAL : {{commande.commandePrixTotal}} €</p>
-    
-    <div>Pensez à imprimer cet email. Il fera office de billet le jour de votre visite</div>
-    
-    <div>N'oubliez pas vos pièces d'identités et justificatifs (en cas de tarif réduit) le jour de la visite.</div>
 
-    <div id="remerciement">Merci de votre commande et à bientôt</div>
-    
+    <h3 id="prix">{{ 'Prix Total'|trans }} : {{commande.commandePrixTotal}} €</h3>
+
+    <div>{{ "Pensez à imprimer cet email. Il fera office de billet le jour de votre visite"|trans }}</div>
+
+    <div>{{ "N'oubliez pas vos pièces d'identités et justificatifs (en cas de tarif réduit) le jour de la visite."|trans }}</div>
+
+    <div id="remerciement">{{ "Merci de votre commande et à bientôt"|trans }}</div>
+
 </div>
 
 {% endblock %}

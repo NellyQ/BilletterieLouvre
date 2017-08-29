@@ -2,6 +2,7 @@ var $collectionHolder;
 var prixDeBase = 16;
 var prices = [];
 
+
 $(document).ready(function () {
     
     $('#renseignements').removeClass("disabled");
@@ -49,7 +50,7 @@ function addDetailForm($collectionHolder, $newLinkLi) {
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li
-        var $newFormLi = $('<li></li>').append("<h2> Renseignements visiteur " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>Prix du billet visiteur " + (i + 1) + " : <span type='text'  class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'>16,00 €</span></div><div class='global_details_" + i + "_visitorReduc'></div>");
+        var $newFormLi = $('<li></li>').append("<h2>"+ renseignements +" " + (i + 1) + " : </h2>" + newForm + "<div class='prixBilletInd'>"+ prixBillet +" "+ (i + 1) + " : <span type='text'  class='global_details_" + i + "_visitorAge global_details_" + i + "_visitorReduc'>16,00 €</span></div><div class='global_details_" + i + "_visitorReduc'></div>");
         $newLinkLi.before($newFormLi);
    
         //Affichage du datepicker
@@ -120,7 +121,7 @@ function addDetailForm($collectionHolder, $newLinkLi) {
             var k = this.id;
             l = $('#' + k).attr("numero");
             if (this.checked) {
-                $('div.' + k).html('Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite.');
+                $('div.' + k).html(justif);
                 $('span.' + k).html('10,00 €');
                 prices[l] = 10;
                 console.log(prices);

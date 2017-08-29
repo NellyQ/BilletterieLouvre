@@ -11,7 +11,7 @@
 {% endblock %} 
 
 {% block title %} 
-{{ parent() }} - Renseignements 
+{{ parent() }} - {{ 'Renseignements'|trans }} 
 {% endblock %} 
 
 {% block body %}
@@ -21,7 +21,7 @@
         {{ form_start(form) }} {{ form_errors(form) }}
         <ul class="details" data-prototype="{{form_widget(form.details.vars.prototype)|e('html_attr')}}">
         </ul>
-        <div id='prixTotal'> Prix Total : <span type='text'  class='prixTotal'></span></div>
+        <div id='prixTotal'> {{ 'Prix Total'|trans }} : <span type='text'  class='prixTotal'></span></div>
         {{ form_row(form.commandePrixTotal) }}
         {{ form_row(form.valider) }} 
         {{ form_rest(form) }}
@@ -32,7 +32,10 @@
 <script>
 var commandeNbBillets = '{{commande.commandeNbBillet}}';
 var json_CommandeDate = '{{jsonCommandeDate|raw}}';
-        
+var renseignements = '{{"Renseignements visiteur"|trans }}';
+var prixBillet = '{{"Prix du billet visiteur"|trans }}';
+var justif = '{{"Veuillez apporter un justificatif(carte édudiante, militaire,...) le jour de la visite."|trans }}';
+
 </script>
 
 <script src="{{ asset('js/details.js') }}"></script>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{% block title %} Billetterie {% endblock %}</title>
+        <title>{% block title %} {{ 'Billetterie'|trans }} {% endblock %}</title>
 
         {% block stylesheets %}
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -19,7 +19,9 @@
     <body>
         <!-- Header -->
         <div id="page-header">
-                <div id="titrePage">BILLETTERIE EN LIGNE</div>
+                <div id="titrePage">{{ 'BILLETTERIE EN LIGNE'|trans }}</div>
+            
+                
         </div>     
         
         <nav class="navbar navbar-inverse">
@@ -28,12 +30,16 @@
                   <a class="navbar-brand" href="{{ path('louvre_billetterie_commande')}}"><img src="{{ asset('images/logo_Louvre.png') }}" class="img-responsive" alt="LogoLouvre"></a>
                 </div>
                 <ul class="nav navbar-nav">
-                  <li id="commande" class="active"><a> 1 - Commande </a></li>  
-                  <li id="renseignements" class="disabled"><a> 2 - Renseignements visiteur(s)</a></li>
-                  <li id="paiement" class="disabled"><a> 3 - Paiement</a></li>
-                  <li id="confirmation" class="disabled"><a> 4 - Confirmation </a></li>
+                  <li id="commande" class="active"><a> 1 - {{ 'Commande'|trans }} </a></li>  
+                  <li id="renseignements" class="disabled"><a> 2 - {{ 'Renseignements visiteur(s)'|trans }}</a></li>
+                  <li id="paiement" class="disabled"><a> 3 - {{ 'Paiement'|trans }}</a></li>
+                  <li id="confirmation" class="disabled"><a> 4 - {{ 'Confirmation'|trans }} </a></li>
                 </ul>
               </div>
+            <div id="drapeaux">
+                    <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale':'fr'})) }}"><img src = "{{ asset('images/french_flag.png') }}" class="drapeau" alt="français"></a> 
+                    <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale':'en'})) }}"><img src = "{{ asset('images/UK-flag.png') }}" class="drapeau" alt="english"></a> 
+                </div>
         </nav>
     {% block body %}
     
@@ -43,8 +49,8 @@
         
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container-fluid text-center">
-                <p><a href="{{ path('louvre_billetterie_tarifs')}}">Tarifs</a> - <a href="{{ path('louvre_billetterie_mentions')}}">Mentions Légales</a> - <a href="mailto:nelly.quesada@orange.fr">Contact</a></p>
-                <p>Ce site, fictif, est réalisé dans le cadre d'une formation OpenClassrooms. Ceci n'est pas la billetterie officielle du Louvre</p>
+                <p><a href="{{ path('louvre_billetterie_tarifs')}}">{{ 'Tarifs'|trans }}</a> - <a href="{{ path('louvre_billetterie_mentions')}}">{{ 'Mentions Légales'|trans }}</a> - <a href="mailto:nelly.quesada@orange.fr">{{ 'Contact'|trans }}</a></p>
+                <p>{{ "Ce site, fictif, est réalisé dans le cadre d'une formation OpenClassrooms. Ceci n'est pas la billetterie officielle du Louvre."|trans }}</p>
             </div>
         </nav>
     </footer>

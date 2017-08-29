@@ -32,7 +32,7 @@ class CommandeType extends AbstractType
             ))
             ->add('commandeTypeBillet', ChoiceType::class, array(
                 'label' => 'Type de billet',
-                'choices' => array('Journée' => 'Journee', 'Demi-journée (accès au musée à partir de 14H00)' => 'Demi-journee'),
+                'choices' => array('Journée' => 'Journee', 'Demi-journée (accès au musée à partir de 14h00)' => 'Demi-journee'),
                 'multiple'  => false,
                 'expanded'  => true,)
             )

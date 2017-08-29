@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block title %}
-  {{ parent() }} - Paiement {{commandePrixTotal}}
+  {{ parent() }} - {{ 'Paiement'|trans }} {{commandePrixTotal}}
 {% endblock %}
 
 {% block body %}
@@ -21,30 +21,30 @@
     <form method="post" id="stripe">
         <div class="container-fluid">
             <div class="group">
-                <label> <span>Nom</span>
+                <label> <span>{{ 'Nom'|trans }}</span>
                   <input name="cardholder-name" class="field" placeholder="Jane Doe" required />
                 </label>
-                <label> <span>Email</span>
+                <label> <span>{{ 'Email'|trans }}</span>
                   <input name="cardholder-mail" class="field" placeholder="abc@mail.com" type="email" required />
                 </label>
             </div>
 
             <div class="group">
-                <label> <span>Carte</span>
+                <label> <span>{{ 'Carte'|trans }}</span>
                     <div id="card-element" class="field"></div>
                 </label>
             </div>
 
-            <input type="checkbox" id="cgv" required> J'accepte les <a href="{{ path('louvre_billetterie_cgv')}}">conditions générales de ventes</a></input>
+            <input type="checkbox" id="cgv" required> {{ "J'accepte les"|trans }} <a href="{{ path('louvre_billetterie_cgv')}}">{{ 'conditions générales de ventes'|trans }}</a></input>
 
             <input hidden class="token" name="stripeToken" class="field" readonly/>
 
-            <button id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € ">Payer {{commande.commandePrixTotal}} €</button>
+            <button id="valider" type="submit" value="Payer {{commande.commandePrixTotal}} € ">{{ 'Payer'|trans }} {{commande.commandePrixTotal}} €</button>
 
             <div class="outcome">
                 <div class="error" role="alert"></div>
                 <div class="success">
-                  Paiment accepté! Vous allez être redirigé automatiquement vers la page de confirmation.
+                  {{ "Paiment accepté! Vous allez être redirigé automatiquement vers la page de confirmation."|trans }}
                 </div>
             </div>
         </div>

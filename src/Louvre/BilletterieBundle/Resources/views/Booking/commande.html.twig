@@ -13,7 +13,7 @@
 
 {% endblock %} 
 
-{% block title %} {{ parent() }} - Réservation {% endblock %} 
+{% block title %} {{ parent() }} - {{ 'Réservation'|trans}} {% endblock %} 
 
 {% block body %}
 
@@ -28,15 +28,15 @@
                     <div id="legende">
                         <div class="bloclegende">
                             <div class="colordispo"></div>
-                            <div>Places disponibles</div>
+                            <div>{{ 'Places disponibles'|trans }}</div>
                         </div>
                         <div class="bloclegende">
                             <div class="colorlimit"></div>
-                            <div>Places limitées</div>
+                            <div>{{ 'Places limitées'|trans }}</div>
                         </div>
                         <div class="bloclegende">
                             <div class="colorindispo"></div>
-                            <div>Places indisponibles</div>
+                            <div>{{ 'Places indisponibles'|trans }}</div>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             </div>
             <span id="dispo"></span> {{ form_row(form.commandeTypeBillet) }} {{ form_rest(form) }} {{ form_end(form) }}
 
-            <input id="confirmeCom" class="btn btn-default" type="submit" value="Je confirme ma commande">
+            <input id="confirmeCom" class="btn btn-default" type="submit" value="{{ 'Je confirme ma commande'|trans }}">
         </div>
     </div>
 </form>
