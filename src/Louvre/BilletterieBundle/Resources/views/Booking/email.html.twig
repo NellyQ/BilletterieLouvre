@@ -10,8 +10,11 @@
 
 <div class="container-fluid col-xs-10 col-xs-offset-1">
 
+    <img src="{{ absolute_url(asset('images/logo_Louvre.png')) }}" alt="LogoLouvre">
+    
     <h3>{{ 'Votre commande'|trans }}</h3>
-
+    
+    
     <p>{{ 'Numéro de commande'|trans }} : {{commande.commandeCode}}</p>
     <p>{{ 'Date de la visite'|trans }} : {{commande.commandeDate | date("d-m-Y")}}</p>
 

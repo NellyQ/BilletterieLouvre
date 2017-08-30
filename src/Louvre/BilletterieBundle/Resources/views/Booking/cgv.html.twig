@@ -1,15 +1,158 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/mentions.html.twig #} 
-
-{% extends "::base.html.twig" %} 
-
-{% block title %} {{ parent() }} - Conditions générales de vente {% endblock %}
-
-{% block body %}
+{# src/Louvre/Billetterie/Resources/views/Booking/mentions.html.twig #} {% extends "::base.html.twig" %} {% block title %} {{ parent() }} - Conditions générales de vente {% endblock %} {% block body %}
 
 <div id="tarifs" class="container-fluid col-xs-10 col-xs-offset-1">
-<h2>Conditions générales de vente</h2>
-    
+    <h2>Conditions générales de vente</h2>
+    <div id="cgv">
+        <div class="row contentTable">
+            <div class="medium-12 large-12 small-12 columns">
+                <ul id="index">
+                    <li><a href="#1">Article 1 :
+                            Objet</a></li>
+                    <li><a href="#2">Article 2 :
+                            Champ d’application des présentes conditions générales de vente</a></li>
+                    <li><a href="#3">Article 3 :
+                            Présentation des billets</a></li>
+                    <li><a href="#4">Article 4 :
+                            Conditions d’utilisation</a></li>
+                    <li><a href="#5">Article 5 :
+                            Modalités de commande</a></li>
+                    <li><a href="#6">Article 6 :
+                            Tarifs</a></li>
+                    <li><a href="#7">Article 7 :
+                            Modalités de paiement</a></li>
+                    <li><a href="#8">Article 8 :
+                            Traitement des données personnelles</a></li>
+                    <li><a href="#9">Article 9 :
+                            Cookies</a></li>
+                </ul>
+                <p>Les présentes conditions sont applicables à compter du 16 janvier 2017</p>
+            </div>
+        </div>
+        <div class="row body">
+            <div class="medium-12 large-12 small-12 columns article" id="1">
+                <h4>
+                    1 - <span>Objet</span>
+                </h4>
+
+                <p>1.1 Les présentes conditions générales de vente ont pour objet de définir les dispositions contractuelles entre : <strong>Site fictif réalisé dans le cadre d'un formation</strong> et toute personne physique ou morale (ci-après dénommée l'acheteur) achetant des billets individuels sur le site de vente en ligne de billets.</p>
+
+                <p>1.2 L’acheteur reconnaît avoir pris connaissance des présentes conditions générales de vente préalablement à la validation de sa commande. Le fait de passer commande vaut acceptation par l’acheteur des présentes conditions générales de vente.</p>
+
+                <p>1.3 Le site se réserve la possibilité d'adapter ou de modifier à tout moment les présentes conditions générales de vente. En cas de modification, les conditions applicables à un achat sont celles en vigueur au jour de la commande.</p>
+            </div>
+            <div class="medium-12 large-12 small-12 columns article" id="2">
+                <h4>
+                    2 - <span>Champ d’application des présentes conditions générales de vente</span>
+                </h4>
+
+                <p>Sont proposés sur le site de vente en ligne des billets pour les prestations suivantes:</p>
+
+                <p> 2.1 Le site Internet informe l’acheteur de la disponibilité des prestations au moment de la passation de la commande.</p>
+
+                <p>2.3 Le nombre de billets vendus en ligne par commande et par personne est limité à 10</p>
+            </div>
+            <a href="#index">Haut de page</a>
+        </div>
+
+        <div class="medium-12 large-12 small-12 columns article" id="3">
+            <h4>
+                    3 - <span>Présentation des billets </span>
+                </h4>
+
+            <p>3.1 Le billet est envoyé par mail à la validation du règlement fictif. </p>
+
+            <p>3.2 Le billet délivré par la billetterie du Louvre comporte notamment:</p>
+            <div>
+                <ul>
+                    <li>le nom et le logo du Louvre</li>
+
+                    <li>la date </li>
+                    <li>le prix de vente de la prestation, en euros</li>
+                    <li>le numéro du billet attribué par le système de billetterie</li>
+                    <li>les renseignements visiteurs</li>
+
+                </ul>
+            </div>
+
+            <a href="#index">Haut de page</a>
+
+        </div>
+
+        <div class="medium-12 large-12 small-12 columns article" id="4">
+            <h4>
+                    4 - <span>Conditions d’utilisation</span>
+                </h4>
+
+            <p>4.1 Les billets sont fictifs, ils ne permettent pas de visiter le Louvre</p>
+
+            <h4>
+            5 - <span>Modalités de commande</span>
+            </h4>
+                           
+                           <p> 5.1 L’acheteur effectue son achat de billet en ligne comme suit:</p>
+                            <ul>
+                                <li>Se rendre sur la page : <a href="./home" rel="nofollow" target="_blank">billetterielouvre.projet-nellyq.fr</a></li>
+                                
+                                <li>Sélectionner la date de visite et le type de billets souhaités à l’aide du calendrier affichant les créneaux disponibles. Lorsque le créneau n’est plus disponible, il est affiché comme complet.</li>
+                                <li>Choisir la quantité de billets désirés, valider.</li>
+                                <li>Renseigner les informations visiteurs </li>
+                                <li>Si la commande est complète, valider pour finaliser la commande.</li>
+                                <li>Indiquer son nom, son adresse email et ses coordonnées bancaire, accepter les conditions générales de vente et cliquer sur "paiement". Le paiement est réalisé par Stripe</li>
+                                <li>Un récapitulatif de commande s’affiche</li>
+                            </ul>
+                    
+                        
+        </div>
+
+        <div class="medium-12 large-12 small-12 columns article" id="6">
+            <h4>
+                    6 - <span>Tarifs</span>
+                </h4>
+           
+                        <td><p><strong>6.1 Les tarifs sont fictifs.</strong></p>
+                       
+                        <a href="#index">Haut de page</a>
+                    
+        </div>
+
+        <div class="medium-12 large-12 small-12 columns article" id="7">
+            <h4>
+                    7 - <span>Modalités de paiement</span>
+                </h4>
+           
+                        <p>7.1 Le paiement des billets par le client s'effectue par carte bancaire à l'aide du module Stripe. Ce dernier est configurer en mode Test et donc les paiement sont virtuels 
+                    </p>
+                   
+        <div class="medium-12 large-12 small-12 columns article" id="8">
+            <h4>
+                    8 - <span>Traitement des données personnelles</span>
+                </h4>
+          
+                        <p>8.1 Seules sont demandées à l’acheteur les informations et données nécessaires à la gestion de sa commande, à la finalisation de sa transaction, à son information. Ces données sont conservées dans la base de la billetterie du Louvre.
+                        <p>
+                    
+                        <p>8.2 Le traitement automatisé des informations concernant les acheteurs a fait l’objet d’une déclaration à la CNIL par l’EPML.
+                        </p>
+                    
+                        <a href="#index">Haut de page</a>
+                   
+        </div>
+        <div class="medium-12 large-12 small-12 columns article" id="9">
+            <h4>
+                    9 - <span>Cookies</span>
+                </h4>
+          
+                        <p>9.1 Le site de la billetterie du Louvre utilise des cookies :
+                            <ul class="bulletList">
+                                <li>« de session », nécessaires à la commande en ligne et détruits dès retrait du site ;</li>
+                                <li>« disque », pour collecter des données anonymes utilisées à des fins statistiques.</li>
+                            </ul>
+                        </p>
+                    
+                        <p>9.2 L’utilisation des cookies peut être désactivée par la sélection par l’acheteur des paramètres appropriés de son navigateur Internet. Une telle désactivation peut empêcher l’utilisation de certaines fonctionnalités du site de vente en ligne de billetterie du Louvre. En achetant en ligne, l’acheteur consent donc expressément au traitement de ses données nominatives dans les conditions et pour les finalités décrites ci-dessus.
+                        </p>
+                   <a href="#index">Haut de page</a> 
+        </div>
+    </div>
 </div>
-
-
 {% endblock %}

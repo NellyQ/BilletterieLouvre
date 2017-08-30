@@ -9,8 +9,10 @@
         <title>{% block title %} {{ 'Billetterie'|trans }} {% endblock %}</title>
 
         {% block stylesheets %}
+            <script src="//code.jquery.com/jquery-1.12.4.js"></script>
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
             <link rel="stylesheet" href="{{ asset('billetterie.css') }}">
+        
         {% endblock %}
         
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -50,7 +52,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container-fluid text-center">
                 <p><a href="{{ path('louvre_billetterie_tarifs')}}">{{ 'Tarifs'|trans }}</a> - <a href="{{ path('louvre_billetterie_mentions')}}">{{ 'Mentions Légales'|trans }}</a> - <a href="mailto:nelly.quesada@orange.fr">{{ 'Contact'|trans }}</a></p>
-                <p>{{ "Ce site, fictif, est réalisé dans le cadre d'une formation OpenClassrooms. Ceci n'est pas la billetterie officielle du Louvre."|trans }}</p>
+                <p>{{ "Réalisé par Nelly Quesada dans le cadre d'une formation OpenClassrooms, ce site est fictif. Ceci n'est pas la billetterie officielle du Louvre."|trans }}</p>
             </div>
         </nav>
     </footer>

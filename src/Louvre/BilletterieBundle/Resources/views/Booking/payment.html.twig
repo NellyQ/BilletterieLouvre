@@ -3,13 +3,11 @@
 {% extends "::base.html.twig" %}
 
 {% block stylesheets %}
-    
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+    {{ parent() }}
 
     <script src="https://js.stripe.com/v3/"></script>
     
-    {{ parent() }}
-
 {% endblock %}
 
 {% block title %}

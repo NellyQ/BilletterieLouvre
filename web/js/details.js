@@ -29,7 +29,6 @@ $(document).ready(function () {
     //recalcul du prix total si modification du formulaire
     $("input[id^='global']").change(function () {
         calculPrixTotal();
-        console.log(prixTotal);
     });
 });
 
@@ -124,12 +123,10 @@ function addDetailForm($collectionHolder, $newLinkLi) {
                 $('div.' + k).html(justif);
                 $('span.' + k).html('10,00 €');
                 prices[l] = 10;
-                console.log(prices);
             } else {
                 $('div.' + k).empty();
                 $('span.' + k).html(htmlAvantReduc);
-                prices[l] = prixAvantReduc;
-                console.log(prices);
+                prices[l] = prixAvantReduc;     
             };
         });      
     }

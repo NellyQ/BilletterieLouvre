@@ -1,6 +1,6 @@
 body {
 
-  margin-bottom: 30px;
+  margin-bottom: 110px;
    
 }
 
@@ -81,11 +81,13 @@ td.indispo.ui-state-disabled span {
   display: flex;
   flex-wrap : wrap;
   justify-content : center;
+  margin: auto;
   max-width : 550px;
 }
 
 #legende {
   margin : auto;
+  width: 200px;
 }
 
 div.bloclegende {
@@ -118,6 +120,7 @@ div.colorindispo {
 #formCommande{
   padding-bottom: 20px;
   padding-top: 10px;
+  margin-bottom: 120px;
 }
 #formCommande div.form-group{
   width : 550px;
@@ -155,6 +158,9 @@ div[id^="global_details_"]{
     padding: 5px;
 }
 
+#details{
+  margin-bottom: 120px;
+}
 .prixBilletInd {
   margin-top :10px;
 }
@@ -326,6 +332,7 @@ h3 {
 /*tarifs*/
 #tarifs{
   margin-top : 30px;
+  margin-bottom: 110px;
 }
 ul#tarifsListe{
   margin-left: 30px;
@@ -333,6 +340,10 @@ ul#tarifsListe{
 
 #defTarif{
   font-weight : bold;
+}
+
+#cgv{
+  margin-bottom: 110px;
 }
 /*footer*/
 footer p{
