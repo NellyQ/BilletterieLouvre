@@ -34,7 +34,8 @@ class BookingController extends Controller
                                     ->getManager()
                                     ->getRepository('LouvreBilletterieBundle:Commande')
                                     ->totalNbBilletJour();
-        //On sérialise les données
+        
+        //Sérialisation des données pour envoi à la vue
         $jsonTotalBillets = $serializer->serialize($arrayTotalBillets, 'json');
         
         //Ouverture de la session
@@ -77,7 +78,6 @@ class BookingController extends Controller
         $serializer = new Serializer($normalizers, $encoders);
         $commandeDate = $commande->getCommandeDate();
         
-        //On sérialise les données
         $jsonCommandeDate = $serializer->serialize($commandeDate, 'json');
         
         
@@ -86,6 +86,7 @@ class BookingController extends Controller
         $form -> add('valider', SubmitType::class, array(
                         'label' => "Valider la commande"));
         
+        //Récupération de l'id de la commande
         $em = $this->getDoctrine()->getManager();    
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         
@@ -107,14 +108,14 @@ class BookingController extends Controller
             //Mise à jour de la bdd
             $em->flush();
 
-        return $this->redirectToRoute('louvre_billetterie_payment');
+            return $this->redirectToRoute('louvre_billetterie_payment');
         }
         
-    return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
-        'form' => $form->createView(),
-        'commande'=> $commande,
-        'jsonCommandeDate'=> $jsonCommandeDate,
-    ));
+        return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
+            'form' => $form->createView(),
+            'commande'=> $commande,
+            'jsonCommandeDate'=> $jsonCommandeDate,
+        ));
     }
     
     public function paymentAction(Request $request)
@@ -123,18 +124,19 @@ class BookingController extends Controller
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
         $commandePrixTotal = $commande->getCommandePrixTotal();
+        
         $em = $this->getDoctrine()->getManager();    
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         
         if ($request->isMethod('POST')) {
     
-            //Mise à jour de la bdd avec le numéro de commande et le mail
+            //Mise à jour de la bdd avec le mail
             $em = $this->getDoctrine()->getManager();
             
             $commandeMail = $_POST['cardholder-mail'];
             $commande->setCommandeMail($commandeMail);
             
-            //Création du numéro de commande avec une clé unique de commande (id de la commande+mail)
+            //Création et mise à jour du numéro de commande avec une clé unique de commande (id de la commande+mail)
             $clécommande = $commandeId.$commandeMail;
             $commandeCode = str_split(hash('md5', $clécommande),8)[0];
             $commande->setCommandeCode($commandeCode);
@@ -144,12 +146,12 @@ class BookingController extends Controller
             
             \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
 
-            // Get the credit card details submitted by the form
+            //credit card details soumis par le formulaire
             $token = $_POST['stripeToken'];
 
-            // Create a charge: this will charge the user's card
+            // Création d'une charge Stripe
             $charge = \Stripe\Charge::create(array(
-                "amount" => $commandePrixTotal*100, // Amount in cents
+                "amount" => $commandePrixTotal*100, //Montant en centimes
                 "currency" => "eur",
                 "source" => $token,
                 "description" => "Paiement Stripe"
@@ -157,6 +159,7 @@ class BookingController extends Controller
             
             $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         
+            //Récupération des détails correspondants à la commande pour l'envoi de mail de confirmation
             $details = $this->getDoctrine()
                         ->getManager()
                         ->getRepository('LouvreBilletterieBundle:Detail')
@@ -188,6 +191,7 @@ class BookingController extends Controller
       ));
     }
     
+    
     public function confirmationAction(Request $request)
     {
         $session = $request->getSession();
@@ -196,6 +200,7 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();    
         $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
         
+        //Récupération des détails correspondants à la commande pour la confirmation
         $details = $this->getDoctrine()
                         ->getManager()
                         ->getRepository('LouvreBilletterieBundle:Detail')

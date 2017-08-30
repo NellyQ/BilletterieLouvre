@@ -17,44 +17,49 @@
 
 <form method="post">
     
-        <div id="formCommande" class="col-xs-10 col-xs-offset-1 well container-fluid">
-            {{ form_start(form) }} 
-            {{ form_errors(form) }}
-                <div class="form-group">{{ form_label(form.commandeDate) }}</div>
-                {{ form_widget(form.commandeDate) }}
-                <div class="flexboxlegende">
-                    <div class="datepicker"></div>
-                    <div id="legende">
-                        <div class="bloclegende">
-                            <div class="colordispo"></div>
-                            <div>{{ 'Places disponibles'|trans }}</div>
-                        </div>
-                        <div class="bloclegende">
-                            <div class="colorlimit"></div>
-                            <div>{{ 'Places limitées'|trans }}</div>
-                        </div>
-                        <div class="bloclegende">
-                            <div class="colorindispo"></div>
-                            <div>{{ 'Places indisponibles'|trans }}</div>
-                        </div>
+    <div id="formCommande" class="col-xs-10 col-xs-offset-1 well container-fluid">
+       
+        {{ form_start(form) }} 
+        {{ form_errors(form) }}
+            
+        <div class="form-group">{{ form_label(form.commandeDate) }}</div>
+        
+        {{ form_widget(form.commandeDate) }}
+            
+        <div class="flexboxlegende">    
+            <div class="datepicker"></div>
+            <div id="legende">
+                <div class="bloclegende">
+                    <div class="colordispo"></div>
+                    <div>{{ 'Places disponibles'|trans }}</div>
+                </div>
+                <div class="bloclegende">
+                    <div class="colorlimit"></div>
+                    <div>{{ 'Places limitées'|trans }}</div>
+                </div>
+                    <div class="bloclegende">
+                        <div class="colorindispo"></div>
+                        <div>{{ 'Places indisponibles'|trans }}</div>
                     </div>
                 </div>
-                <div id="billetsRestants"></div>
-                {{ form_errors(form.commandeDate) }}
-            <span id="dispo"></span> 
-            {{ form_row(form.commandeTypeBillet) }} 
-            {{ form_rest(form) }} 
-            {{ form_end(form) }}
+            </div>
+            
+        <div id="billetsRestants"></div>
+        
+        {{ form_errors(form.commandeDate) }}
+           
+        <span id="dispo"></span> 
+            
+        {{ form_row(form.commandeTypeBillet) }}     
+        {{ form_rest(form) }} 
+        {{ form_end(form) }}
 
             <input id="confirmeCom" class="btn btn-default" type="submit" value="{{ 'Je confirme ma commande'|trans }}">
-        </div>
-   
+    </div>   
 </form>
-</div>
 
 <script>
-    var json_totalBillets = '{{jsonTotalBillets|raw}}';
-    
+    var json_totalBillets = '{{jsonTotalBillets|raw}}';    
 </script>
 
 <script src="{{ asset('js/billetterie.js') }}"></script>

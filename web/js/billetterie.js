@@ -53,10 +53,12 @@ $(".datepicker").datepicker({
                 return [false, ''];
             } else if ((day == '1' && month == "5") || (day == '1' && month == "11") || (day == '25' && month == "12")) {
                 return [false, ''];
-
+            
+            //Désactivation et ajout d'une classe indispo si le nombre de billet déjà vendu est de 1000
             } else if ((daysShown == dateDispo) && ((billetsRestants == 0) || (billetsRestants < 0))) {
                 return [false, 'indispo'];
-
+            
+            //Ajout d'une classe limit si le nombre de billet déjà vendu est compris entre 990 et 999
             } else if ((daysShown == dateDispo) && ((billetsRestants <= 10) && (billetsRestants > 0))) {
                 return [true, 'limit'];
 
@@ -72,7 +74,8 @@ $(".datepicker").datepicker({
         for (i = 0; i < totalBillets.length; i++) {
             var dateDispo = totalBillets[i].commandeDate;
             var billetsRestants = 1000 - (totalBillets[i].nbTotal);
-
+            
+            //Si le nombre de billet restant est compris entre 1 et 10: ajout d'une phrase spécifiant le nombre de billet restant et limitation du nombre de billets réservables.
             if ((this.value == dateDispo) && ((billetsRestants <= 10) && (billetsRestants > 0))) {
                 $('#billetsRestants').text("Il reste " + billetsRestants + " billet(s) disponible(s) pour cette date");
                 $('#commande_commandeNbBillet').attr('max', billetsRestants);
