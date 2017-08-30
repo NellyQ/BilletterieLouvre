@@ -25,3 +25,4 @@ louvre_billetterie_mentions:
 louvre_billetterie_cgv:
     path:     /cgv
     defaults: { _controller: LouvreBilletterieBundle:Booking:cgv }
+    

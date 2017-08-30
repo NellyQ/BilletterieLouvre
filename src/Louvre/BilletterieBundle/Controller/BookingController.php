@@ -69,7 +69,6 @@ class BookingController extends Controller
         $session = $request->getSession();
         $commande = $session->get('commande');
         $commandeId = $commande->getCommandeId();
-        $commandeNbBillet = $commande->getCommandeNbBillet();
         
         //Récupération et sérialisation de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
         $encoders = array(new XmlEncoder(), new JsonEncoder());
