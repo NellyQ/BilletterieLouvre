@@ -1,6 +1,6 @@
 louvre_billetterie:
     resource: "@LouvreBilletterieBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/billetterie
+    prefix:   /{_locale}
     requirements:
         _locale: en|fr
     

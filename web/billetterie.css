@@ -181,6 +181,10 @@ div.checkbox {
   font-size: 1em;
 }
 
+div#global_details {
+  display: none;
+}
+
 #global_commandePrixTotal {
   display : none;
 }
@@ -343,6 +347,10 @@ ul#tarifsListe{
 }
 
 #cgv{
+  margin-bottom: 110px;
+}
+
+#recap {
   margin-bottom: 110px;
 }
 /*footer*/

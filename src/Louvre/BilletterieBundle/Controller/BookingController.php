@@ -68,46 +68,71 @@ class BookingController extends Controller
     {
         $session = $request->getSession();
         $commande = $session->get('commande');
-        $commandeId = $commande->getCommandeId();
         
-        //Récupération et sérialisation de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new DateTimeNormalizer('d-m-Y'));
+        if ($commande === null){
+            
+            return $this->redirectToRoute('louvre_billetterie_commande');
+        
+        } else {
+            $commandeId = $commande->getCommandeId();
 
-        $serializer = new Serializer($normalizers, $encoders);
-        $commandeDate = $commande->getCommandeDate();
-        
-        $jsonCommandeDate = $serializer->serialize($commandeDate, 'json');
-        
-        
-        //Création du formulaire Global
-        $form = $this->get('form.factory')->create(GlobalType::class, $commande);
-        $form -> add('valider', SubmitType::class, array(
-                        'label' => "Valider la commande"));
-        
-        //Récupération de l'id de la commande
-        $em = $this->getDoctrine()->getManager();    
-        $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
-        
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            
-            //Enregistrement du prix total de la commande
-            $commandePrixTotal = $form->get('commandePrixTotal')->getData();
-            $commande->setCommandePrixTotal($commandePrixTotal);
-            $em->persist($commande);
-            
-            //Enregistrement des détails des visiteurs
-            $details = $form->get('details')->getData(); 
-            foreach ($details as $detail){
-                $details->add($detail);
-                $detail->setCommandeId($commandeId);
-                $em->persist($detail);
+            $details = $this->getDoctrine()
+                            ->getManager()
+                            ->getRepository('LouvreBilletterieBundle:Detail')
+                            ->findByCommandeId($commandeId);
+
+            //Récupération et sérialisation de la date de commande pour pouvoir calculer l'age du visiteur pour le jour de la visite
+            $encoders = array(new XmlEncoder(), new JsonEncoder());
+            $normalizers = array(new DateTimeNormalizer('d-m-Y'));
+
+            $serializer = new Serializer($normalizers, $encoders);
+            $commandeDate = $commande->getCommandeDate();
+
+            $jsonCommandeDate = $serializer->serialize($commandeDate, 'json');
+
+
+            //Création du formulaire Global
+            $form = $this->get('form.factory')->create(GlobalType::class, $commande);
+            $form -> add('valider', SubmitType::class, array(
+                            'label' => "Valider la commande"));
+
+            //Récupération de l'id de la commande
+            $em = $this->getDoctrine()->getManager();    
+            $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+                //Enregistrement du prix total de la commande
+                $commandePrixTotal = $form->get('commandePrixTotal')->getData();
+                $commande->setCommandePrixTotal($commandePrixTotal);
+                $em->persist($commande);
+
+                //Enregistrement des détails des visiteurs
+                //Si retour en arrière depuis la page de paiement suppression des détails déjà enregistrés puis enregistrement des modifications
+                if ($details != 0){
+                    foreach ($details as $detail){
+                    $em->remove($detail);}
+                    $em->flush();
+                    $details = $form->get('details')->getData();
+                    foreach ($details as $detail){
+                        $details->add($detail);
+                        $detail->setCommandeId($commandeId);
+                        $em->persist($detail);
+                    }
+
+                } else {
+                    $details = $form->get('details')->getData();
+                    foreach ($details as $detail){
+                        $details->add($detail);
+                        $detail->setCommandeId($commandeId);
+                        $em->persist($detail);
+                    }
+                }
+                //Mise à jour de la bdd
+                $em->flush();
+
+                return $this->redirectToRoute('louvre_billetterie_payment');
             }
-       
-            //Mise à jour de la bdd
-            $em->flush();
-
-            return $this->redirectToRoute('louvre_billetterie_payment');
         }
         
         return $this->render('LouvreBilletterieBundle:Booking:details.html.twig', array(
@@ -121,67 +146,76 @@ class BookingController extends Controller
     {
         $session = $request->getSession();
         $commande = $session->get('commande');
-        $commandeId = $commande->getCommandeId();
-        $commandePrixTotal = $commande->getCommandePrixTotal();
         
-        $em = $this->getDoctrine()->getManager();    
-        $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+        if ($commande === null){
+            return $this->redirectToRoute('louvre_billetterie_commande');
         
-        if ($request->isMethod('POST')) {
-    
-            //Mise à jour de la bdd avec le mail
-            $em = $this->getDoctrine()->getManager();
-            
-            $commandeMail = $_POST['cardholder-mail'];
-            $commande->setCommandeMail($commandeMail);
-            
-            //Création et mise à jour du numéro de commande avec une clé unique de commande (id de la commande+mail)
-            $clécommande = $commandeId.$commandeMail;
-            $commandeCode = str_split(hash('md5', $clécommande),8)[0];
-            $commande->setCommandeCode($commandeCode);
-            
-            $em->persist($commande);
-            $em->flush();
-            
-            \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
+        } else {
+            $commandeId = $commande->getCommandeId();
+            $commandePrixTotal = $commande->getCommandePrixTotal();
 
-            //credit card details soumis par le formulaire
-            $token = $_POST['stripeToken'];
-
-            // Création d'une charge Stripe
-            $charge = \Stripe\Charge::create(array(
-                "amount" => $commandePrixTotal*100, //Montant en centimes
-                "currency" => "eur",
-                "source" => $token,
-                "description" => "Paiement Stripe"
-                ));
-            
+            $em = $this->getDoctrine()->getManager();    
             $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
-        
-            //Récupération des détails correspondants à la commande pour l'envoi de mail de confirmation
-            $details = $this->getDoctrine()
-                        ->getManager()
-                        ->getRepository('LouvreBilletterieBundle:Detail')
-                        ->findByCommandeId($commandeId);
+
+            if ($request->isMethod('POST')) {
+
+                //Mise à jour de la bdd avec le mail
+                $em = $this->getDoctrine()->getManager();
+
+                $commandeMail = $_POST['cardholder-mail'];
+                $commande->setCommandeMail($commandeMail);
+
+                //Création et mise à jour du numéro de commande avec une clé unique de commande (id de la commande+mail)
+                $clécommande = $commandeId.$commandeMail;
+                $commandeCode = str_split(hash('md5', $clécommande),8)[0];
+                $commande->setCommandeCode($commandeCode);
+
+                $em->persist($commande);
+                $em->flush();
+
+                \Stripe\Stripe::setApiKey("sk_test_7OPvHSQnlADZ7IaQ19NxHinf");
+
+                //credit card details soumis par le formulaire
+                $token = $_POST['stripeToken'];
+
+                // Création d'une charge Stripe
+                $charge = \Stripe\Charge::create(array(
+                    "amount" => $commandePrixTotal*100, //Montant en centimes
+                    "currency" => "eur",
+                    "source" => $token,
+                    "description" => "Paiement Stripe"
+                    ));
+
+                $commande = $em->getRepository('LouvreBilletterieBundle:Commande')->find($commandeId);
+
+                //Récupération des détails correspondants à la commande pour l'envoi de mail de confirmation
+                $details = $this->getDoctrine()
+                            ->getManager()
+                            ->getRepository('LouvreBilletterieBundle:Detail')
+                            ->findByCommandeId($commandeId);
+
+                //Envoi de l'email de confirmation
+                $message = (new \Swift_Message('Votre commande'))
+                    ->setFrom(array('nelly.quesada19@gmail.com'=> "Billetterie du Louvre"))
+                    ->setTo($commandeMail)
+                    ->setBody(
+                        $this->renderView(
+                            // app/Resources/views/Booking/email.html.twig
+                            'LouvreBilletterieBundle:Booking:email.html.twig',array(
+                                'commande' => $commande,
+                                'details' => $details,
+                        )),
+                        'text/html'
+                    );
+
+                $this->get('mailer')->send($message);
+
+                return $this->redirectToRoute('louvre_billetterie_confirmation');
             
-            //Envoi de l'email de confirmation
-            $message = (new \Swift_Message('Votre commande'))
-                ->setFrom(array('nelly.quesada19@gmail.com'=> "Billetterie du Louvre"))
-                ->setTo($commandeMail)
-                ->setBody(
-                    $this->renderView(
-                        // app/Resources/views/Booking/email.html.twig
-                        'LouvreBilletterieBundle:Booking:email.html.twig',array(
-                            'commande' => $commande,
-                            'details' => $details,
-                    )),
-                    'text/html'
-                );
-            
-            $this->get('mailer')->send($message);
-            
-            return $this->redirectToRoute('louvre_billetterie_confirmation');
-        }
+            } else { 
+                $session->getFlashBag()->add('error','Paiement non validé');
+            }
+        } 
         
       return $this->render('LouvreBilletterieBundle:Booking:payment.html.twig', array(
           'commande' => $commande,
@@ -204,6 +238,8 @@ class BookingController extends Controller
                         ->getManager()
                         ->getRepository('LouvreBilletterieBundle:Detail')
                         ->findByCommandeId($commandeId);
+        
+        $session->clear();
         
         return $this->render('LouvreBilletterieBundle:Booking:confirmation.html.twig', array(
             'commande' => $commande,

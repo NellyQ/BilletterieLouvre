@@ -16,6 +16,7 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('c');
         
         $qb ->select('c.commandeDate')
+            ->where('c.commandeCode != 0')
             ->addSelect('SUM(c.commandeNbBillet) AS nbTotal')
             ->groupBy('c.commandeDate');
 

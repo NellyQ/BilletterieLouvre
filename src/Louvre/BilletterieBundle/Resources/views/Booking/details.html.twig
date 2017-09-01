@@ -1,4 +1,6 @@
-{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} {% extends "::base.html.twig" %} 
+{# src/Louvre/Billetterie/Resources/views/Booking/details.html.twig #} 
+
+{% extends "::base.html.twig" %} 
 
 {% block stylesheets %}
 
@@ -6,6 +8,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('js/datepicker-fr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/details.js') }}"></script>
  
 {% endblock %} 
 
@@ -14,6 +17,8 @@
 {% endblock %} 
 
 {% block body %}
+
+<h3> {{ 'Commande pour le' |trans }} : {{commande.commandeDate | date("d-m-Y")}}</h3>
 
 <form method="post" >
     <div id="details" class="col-xs-10 col-xs-offset-1 well">
@@ -37,6 +42,6 @@ var justif = '{{"Veuillez apporter un justificatif(carte édudiante, militaire,.
 
 </script>
 
-<script src="{{ asset('js/details.js') }}"></script>
+
 
 {% endblock %}

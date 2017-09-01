@@ -85,9 +85,11 @@ $(".datepicker").datepicker({
         //Desactivation du bouton radio Journee si date selectionnée = aujourd'hui et heure > 14h00
         if (date == nowFormat && heure >= 14) {
             $('input[value="Journee"]').attr('disabled', "disabled");
+            $('input[value="Journee"]').removeAttr('checked');
             $('input[value="Demi-journee"]').attr('checked', "checked");
         } else {
             $('input[value="Journee"]').removeAttr('disabled');
+            $('input[value="Demi-journee"]').removeAttr('checked');
         }
     }
 });
